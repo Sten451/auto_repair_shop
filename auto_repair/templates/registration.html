@@ -1,0 +1,82 @@
+{% extends "base.html" %} {% block title
+%}<title>Регистрация</title>{%endblock%} {% block link_head %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/auth.css') }}"
+  media="screen"
+  type="text/css"
+/>
+<link
+  href="http://fonts.googleapis.com/css?family=Open+Sans:400,700"
+  rel="stylesheet"
+  type="text/css"
+/>
+{% endblock %} {% block content %}
+
+<div id="login-form">
+  <h1><i class="fa-solid fa-user"></i> Регистрация</h1>
+  <fieldset>
+    <form action="javascript:void(0);" method="get">
+      <input
+        type="text"
+        required
+        value=""
+        placeholder="Введите свой логин"
+        onBlur="if(this.value=='')this.value='Логин'"
+        onFocus="if(this.value=='Логин')this.value='' "
+      />
+      <input
+        type="text"
+        required
+        value=""
+        placeholder="Введите Фамилию"
+        onBlur="if(this.value=='')this.value='Логин'"
+        onFocus="if(this.value=='Логин')this.value='' "
+      />
+      <input
+        type="text"
+        required
+        value=""
+        placeholder="Введите Имя"
+        onBlur="if(this.value=='')this.value='Логин'"
+        onFocus="if(this.value=='Логин')this.value='' "
+      />
+      <input
+        type="password"
+        required
+        placeholder="Пароль"
+        value=""
+        onBlur="if(this.value=='')this.value='Пароль'"
+        onFocus="if(this.value=='Пароль')this.value='' "
+      />
+      <input
+        type="password"
+        required
+        placeholder="Подтвердите пароль"
+        value=""
+      />
+      <input type="email" required placeholder="Введите свой email" value="" />
+      <input
+        type="tel"
+        required
+        placeholder="Введите свой номер телефона"
+        value=""
+      />
+      <p class="avatar_text">Выберите файл для аватара (необязательно)</p>
+      <input type="file" value="" />
+      <button class="button button_auth" type="submit">
+        Зарегистрироваться
+      </button>
+      <a class="button button_auth" href="{{ url_for('users.authentication') }}"
+        >Вход на сайт</a
+      >
+    </form>
+  </fieldset>
+</div>
+
+{% endblock %} {% block js %}
+<script
+  src="https://kit.fontawesome.com/6e973e1134.js"
+  crossorigin="anonymous"
+></script>
+{% endblock %}

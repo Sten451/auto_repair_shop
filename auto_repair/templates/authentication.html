@@ -1,0 +1,49 @@
+{% extends "base.html" %} {% block title
+%}<title>Авторизация</title>{%endblock%} {% block link_head %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/auth.css') }}"
+  media="screen"
+  type="text/css"
+/>
+<link
+  href="http://fonts.googleapis.com/css?family=Open+Sans:400,700"
+  rel="stylesheet"
+  type="text/css"
+/>
+{% endblock %} {% block content %}
+
+<div id="login-form">
+  <h1><i class="fa-solid fa-lock"></i> Авторизация</h1>
+  <fieldset>
+    <form action="javascript:void(0);" method="get">
+      <input
+        type="text"
+        required
+        value=""
+        placeholder="Введите свой логин"
+        onBlur="if(this.value=='')this.value='Логин'"
+        onFocus="if(this.value=='Логин')this.value='' "
+      />
+      <input
+        type="password"
+        required
+        placeholder="Пароль"
+        value=""
+        onBlur="if(this.value=='')this.value='Пароль'"
+        onFocus="if(this.value=='Пароль')this.value='' "
+      />
+      <button class="button button_auth" type="submit">Войти</button>
+      <a class="button button_auth" href="{{ url_for('users.registrations') }}"
+        >Зарегистрироваться</a
+      >
+    </form>
+  </fieldset>
+</div>
+
+{% endblock %} {% block js %}
+<script
+  src="https://kit.fontawesome.com/6e973e1134.js"
+  crossorigin="anonymous"
+></script>
+{% endblock %}
