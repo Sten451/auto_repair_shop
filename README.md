@@ -5,6 +5,16 @@
 **Используемый стек:**
 * Python 3.10.4
 * Flask 2.1.2
+* Flask-Admin 1.6.0
+* Flask-Login 0.6.1
+* Flask-SQLAlchemy 2.5.1
+
+## Установка и запуск
+pip install -r requirements.txt  
+python -m flask run или python app.py
+
+
+
 
 
 

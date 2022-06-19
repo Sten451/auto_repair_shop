@@ -1,0 +1,613 @@
+{% extends "base.html" %} {% block title %}<title>Личный кабинет</title
+>{%endblock%} {% block link_head %}
+<link
+  href="{{ url_for('static', filename='css/bootstrap-dark.min.css') }}"
+  rel="stylesheet"
+  type="text/css"
+/>
+<link
+  href="{{ url_for('static', filename='css/app-dark.min.css') }}"
+  rel="stylesheet"
+  type="text/css"
+/>
+{% endblock %} {% block content %}
+<body data-layout="detached" data-topbar="colored">
+  <!-- <body data-layout="horizontal" data-topbar="dark"> -->
+
+  <div class="container-fluid">
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+      <header id="page-topbar">
+        <div class="navbar-header">
+          <div class="container-fluid">
+            <div class="float-end">
+              <div class="dropdown d-inline-block d-lg-none ms-2">
+                <button
+                  type="button"
+                  class="btn header-item noti-icon waves-effect"
+                  id="page-header-search-dropdown"
+                  data-bs-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i class="mdi mdi-magnify"></i>
+                </button>
+                <div
+                  class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+                  aria-labelledby="page-header-search-dropdown"
+                >
+                  <form class="p-3">
+                    <div class="m-0">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Search ..."
+                          aria-label="Recipient's username"
+                        />
+                        <div class="input-group-append">
+                          <button class="btn btn-primary" type="submit">
+                            <i class="mdi mdi-magnify"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <div class="dropdown d-none d-sm-inline-block">
+                <button
+                  type="button"
+                  class="btn header-item waves-effect"
+                  data-bs-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <img
+                    class=""
+                    src="{{ url_for('static', filename='img/lk/flags/russia.jpg') }}"
+                    alt="Header Language"
+                    height="16"
+                  />
+                </button>
+              </div>
+
+              <div class="dropdown d-inline-block">
+                <button
+                  type="button"
+                  class="btn header-item noti-icon waves-effect"
+                  id="page-header-notifications-dropdown"
+                  data-bs-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i class="fa-solid fa-bell"></i>
+                  <span class="badge rounded-pill bg-danger">3</span>
+                </button>
+                <div
+                  class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+                  aria-labelledby="page-header-notifications-dropdown"
+                >
+                  <div class="p-3">
+                    <div class="row align-items-center">
+                      <div class="col">
+                        <h6 class="m-0">Notifications</h6>
+                      </div>
+                      <div class="col-auto">
+                        <a href="#!" class="small"> View All</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div data-simplebar="init" style="max-height: 230px">
+                    <div class="simplebar-wrapper" style="margin: 0px">
+                      <div class="simplebar-height-auto-observer-wrapper">
+                        <div class="simplebar-height-auto-observer"></div>
+                      </div>
+                      <div class="simplebar-mask">
+                        <div
+                          class="simplebar-offset"
+                          style="right: 0px; bottom: 0px"
+                        >
+                          <div
+                            class="simplebar-content-wrapper"
+                            style="height: auto; overflow: hidden"
+                          >
+                            <div class="simplebar-content" style="padding: 0px">
+                              <a href="" class="text-reset notification-item">
+                                <div class="d-flex align-items-start">
+                                  <div class="avatar-xs me-3">
+                                    <span
+                                      class="avatar-title bg-primary rounded-circle font-size-16"
+                                    >
+                                      <i class="bx bx-cart"></i>
+                                    </span>
+                                  </div>
+                                  <div class="flex-1">
+                                    <h6 class="mt-0 mb-1">
+                                      Your order is placed
+                                    </h6>
+                                    <div class="font-size-12 text-muted">
+                                      <p class="mb-1">
+                                        If several languages coalesce the
+                                        grammar
+                                      </p>
+                                      <p class="mb-0">
+                                        <i class="mdi mdi-clock-outline"></i> 3
+                                        min ago
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </a>
+                              <a href="" class="text-reset notification-item">
+                                <div class="d-flex align-items-start">
+                                  <img
+                                    src="{{ url_for('static', filename='img/lk/users/avatar-3.jpg') }}"
+                                    class="me-3 rounded-circle avatar-xs"
+                                    alt="user-pic"
+                                  />
+                                  <div class="flex-1">
+                                    <h6 class="mt-0 mb-1">James Lemire</h6>
+                                    <div class="font-size-12 text-muted">
+                                      <p class="mb-1">
+                                        It will seem like simplified English.
+                                      </p>
+                                      <p class="mb-0">
+                                        <i class="mdi mdi-clock-outline"></i> 1
+                                        hours ago
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="simplebar-placeholder"
+                        style="width: 0px; height: 0px"
+                      ></div>
+                    </div>
+                    <div
+                      class="simplebar-track simplebar-horizontal"
+                      style="visibility: hidden"
+                    >
+                      <div
+                        class="simplebar-scrollbar"
+                        style="
+                          transform: translate3d(0px, 0px, 0px);
+                          display: none;
+                        "
+                      ></div>
+                    </div>
+                    <div
+                      class="simplebar-track simplebar-vertical"
+                      style="visibility: hidden"
+                    >
+                      <div
+                        class="simplebar-scrollbar"
+                        style="
+                          transform: translate3d(0px, 0px, 0px);
+                          display: none;
+                        "
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="p-2 border-top d-grid">
+                    <a
+                      class="btn btn-sm btn-link font-size-14"
+                      href="javascript:void(0)"
+                    >
+                      <i class="mdi mdi-arrow-right-circle me-1"></i> View
+                      More..
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dropdown d-inline-block">
+                <button
+                  type="button"
+                  class="btn header-item waves-effect"
+                  id="page-header-user-dropdown"
+                  data-bs-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <img
+                    class="rounded-circle header-profile-user"
+                    src="{{ url_for('static', filename='img/lk/users/avatar-2.jpg') }}"
+                    alt="Header Avatar"
+                  />
+                  <span class="d-none d-xl-inline-block ms-1">Patrick</span>
+                  <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-end">
+                  <!-- item-->
+                  <a class="dropdown-item" href="#"
+                    ><i class="bx bx-user font-size-16 align-middle me-1"></i>
+                    Profile</a
+                  >
+                  <a class="dropdown-item" href="#"
+                    ><i class="bx bx-wallet font-size-16 align-middle me-1"></i>
+                    My Wallet</a
+                  >
+                  <a class="dropdown-item d-block" href="#"
+                    ><span class="badge bg-success float-end">11</span
+                    ><i class="bx bx-wrench font-size-16 align-middle me-1"></i>
+                    Settings</a
+                  >
+                  <a class="dropdown-item" href="#"
+                    ><i
+                      class="bx bx-lock-open font-size-16 align-middle me-1"
+                    ></i>
+                    Lock screen</a
+                  >
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item text-danger" href="#"
+                    ><i
+                      class="bx bx-power-off font-size-16 align-middle me-1 text-danger"
+                    ></i>
+                    Logout</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div>
+              <!-- LOGO -->
+              <div class="navbar-brand-box">
+                <a href="{{ url_for('main.home') }}" class="logo logo-light">
+                  <span class="logo-lg">
+                    <img
+                      src="{{ url_for('static', filename='img/logo-black.png') }}"
+                      alt=""
+                      height="50"
+                    />
+                  </span>
+                </a>
+              </div>
+
+              <button
+                type="button"
+                class="btn btn-sm px-3 font-size-16 header-item toggle-btn waves-effect"
+                id="vertical-menu-btn"
+              >
+                <i class="fa fa-fw fa-bars"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+      <!-- ========== Left Sidebar Start ========== -->
+      <div class="vertical-menu">
+        <div class="h-100">
+          <div class="user-wid text-center py-4">
+            <div class="user-img">
+              <img
+                src="{{ url_for('static', filename='img/lk/users/avatar-2.jpg') }}"
+                alt=""
+                class="avatar-md mx-auto rounded-circle"
+              />
+            </div>
+
+            <div class="mt-3">
+              <a href="#" class="text-dark fw-medium font-size-16"
+                >Patrick Becker</a
+              >
+            </div>
+            <a href="#" class="btn btn-primary btn-sm">Cменить аватар </a>
+          </div>
+
+          <!--- Sidemenu -->
+          <div id="sidebar-menu" class="mm-active">
+            <!-- Left Menu Start -->
+            <ul class="metismenu list-unstyled mm-show" id="side-menu">
+              <li class="menu-title">Профиль</li>
+
+              <li>
+                <a href="javascript: void(0);" class="waves-effect">
+                  <i class="fa-solid fa-user"></i>
+                  <span class="badge rounded-pill bg-danger float-end">6</span>
+                  <span>Личные данные</span>
+                </a>
+              </li>
+              <li class="menu-title">Транспорт</li>
+              <li>
+                <a href="javascript: void(0);" class="waves-effect">
+                  <i class="fa-solid fa-car"></i>
+                  <span>Мои авто</span>
+                </a>
+              </li>
+              <li class="menu-title">Заказы</li>
+              <li>
+                <a href="javascript: void(0);" class="waves-effect">
+                  <i class="fa-solid fa-cart-shopping"></i>
+                  <span>Мои заказы</span>
+                </a>
+              </li>
+              <li class="menu-title">Техподдержка</li>
+              <li>
+                <a href="javascript: void(0);" class="waves-effect">
+                  <i class="fa-solid fa-question"></i>
+                  <span>Задать вопрос</span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript: void(0);" class="waves-effect">
+                  <i class="fa-solid fa-book"></i>
+                  <span>Оставить отзыв</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <!-- Sidebar -->
+        </div>
+      </div>
+
+      <div class="main-content">
+        <div class="page-content">
+          <!-- start page title -->
+          <div class="row">
+            <div class="col-12">
+              <div
+                class="page-title-box d-flex align-items-center justify-content-between"
+              >
+                <h4 class="page-title mb-0 font-size-18">
+                  Личный кабинет пользователя
+                </h4>
+
+                <div class="page-title-right">
+                  <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item active">
+                      <img
+                        width="100px"
+                        height="30px;"
+                        src="{{ url_for('static', filename='img/logo.png') }}"
+                        class="black-logo"
+                        alt="logo"
+                      />
+                      Добро пожаловать на CarOne
+                    </li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end page title -->
+
+          <div class="row">
+            <div class="col-xl-6">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title mb-4">Личные данные</h4>
+                  <div>
+                    <div class="pb-3 border-bottom">
+                      <div class="row align-items-center">
+                        <div class="col-8">
+                          <p class="mb-2">Логин на сайте</p>
+                          <h4 class="mb-0">Это никнейм</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="pb-3 border-bottom">
+                      <div class="row align-items-center">
+                        <div class="col-8">
+                          <p class="mb-2">Фамилия</p>
+                          <h4 class="mb-0">Это фамилия</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="pb-3 border-bottom">
+                      <div class="row align-items-center">
+                        <div class="col-8">
+                          <p class="mb-2">Имя</p>
+                          <h4 class="mb-0">Это имя</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="pb-3 border-bottom">
+                      <div class="row align-items-center">
+                        <div class="col-8">
+                          <p class="mb-2">Email</p>
+                          <h4 class="mb-0">Это email</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="pb-3 border-bottom">
+                      <div class="row align-items-center">
+                        <div class="col-8">
+                          <p class="mb-2">Телефон</p>
+                          <h4 class="mb-0">Это телефон</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="pb-3 border-bottom">
+                      <div class="row align-items-center">
+                        <div class="col-8">
+                          <p class="mb-2">Пароль</p>
+                          <h4 class="mb-0">
+                            <a href="#" class="btn btn-primary btn-sm"
+                              >Сменить пароль</a
+                            >
+                          </h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <a href="#" class="btn btn-primary btn-sm">Изменить данные</a>
+              </div>
+            </div>
+            <div class="col-xl-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex align-items-start">
+                    <div class="avatar-sm font-size-20 me-3">
+                      <span
+                        class="avatar-title bg-soft-primary text-primary rounded"
+                      >
+                        <i class="mdi mdi-tag-plus-outline"></i>
+                      </span>
+                    </div>
+                    <div class="flex-1">
+                      <div class="font-size-16 mt-2">Моя машина</div>
+                    </div>
+                  </div>
+                  <h4 class="mt-4">бмв</h4>
+                  <div class="row">
+                    <div class="col-7">
+                      <p class="mb-0">
+                        <span class="text-success me-2">
+                          х000со777 <i class="mdi mdi-arrow-up"></i>
+                        </span>
+                      </p>
+                    </div>
+                    <a href="#" class="btn btn-primary btn-sm"
+                      >Изменить данные</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end row -->
+
+          <div class="row">
+            <div class="col-xl-12">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title mb-4">Latest Transactions</h4>
+
+                  <div class="table-responsive">
+                    <table class="table table-centered">
+                      <thead>
+                        <tr>
+                          <th scope="col">Date</th>
+                          <th scope="col">Id no.</th>
+                          <th scope="col">Billing Name</th>
+                          <th scope="col">Amount</th>
+                          <th scope="col" colspan="2">Payment Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>15/01/2020</td>
+                          <td>
+                            <a href="#" class="text-body fw-medium">#SK1235</a>
+                          </td>
+                          <td>Werner Berlin</td>
+                          <td>$ 125</td>
+                          <td>
+                            <span class="badge badge-soft-success font-size-12"
+                              >Paid</span
+                            >
+                          </td>
+                          <td>
+                            <a href="#" class="btn btn-primary btn-sm">View</a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>16/01/2020</td>
+                          <td>
+                            <a href="#" class="text-body fw-medium">#SK1236</a>
+                          </td>
+                          <td>Robert Jordan</td>
+                          <td>$ 118</td>
+                          <td>
+                            <span class="badge badge-soft-danger font-size-12"
+                              >Chargeback</span
+                            >
+                          </td>
+                          <td>
+                            <a href="#" class="btn btn-primary btn-sm">View</a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>17/01/2020</td>
+                          <td>
+                            <a href="#" class="text-body fw-medium">#SK1237</a>
+                          </td>
+                          <td>Daniel Finch</td>
+                          <td>$ 115</td>
+                          <td>
+                            <span class="badge badge-soft-success font-size-12"
+                              >Paid</span
+                            >
+                          </td>
+                          <td>
+                            <a href="#" class="btn btn-primary btn-sm">View</a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>18/01/2020</td>
+                          <td>
+                            <a href="#" class="text-body fw-medium">#SK1238</a>
+                          </td>
+                          <td>James Hawkins</td>
+                          <td>$ 121</td>
+                          <td>
+                            <span class="badge badge-soft-warning font-size-12"
+                              >Refund</span
+                            >
+                          </td>
+                          <td>
+                            <a href="#" class="btn btn-primary btn-sm">View</a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end row -->
+        </div>
+        <!-- End Page-content -->
+
+        <footer class="footer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-6">
+                <script>
+                  document.write(new Date().getFullYear());
+                </script>
+                © CarOne
+              </div>
+              <div class="col-sm-6">
+                <div class="text-sm-end d-none d-sm-block">
+                  Design &amp; Develop by Themesbrand
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+      <!-- end main content-->
+    </div>
+    <!-- END layout-wrapper -->
+  </div>
+  <!-- end container-fluid -->
+</body>
+{% endblock %} {% block js %}
+<script
+  src="https://kit.fontawesome.com/6e973e1134.js"
+  crossorigin="anonymous"
+></script>
+{% endblock %}
