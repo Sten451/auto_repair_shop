@@ -27,8 +27,7 @@ class RegistrationForm(FlaskForm):
 
     phone = StringField(label='Номер мобильного телефона', validators=[DataRequired(
     ), Regexp(r'^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$')], render_kw={"placeholder": "Номер мобильного телефона 11 цифр"})
-    picture = FileField('Фото профиля',
-                        validators=[FileAllowed(['jpg', 'png'])])
+    
     submit = SubmitField('Зарегистрироваться')
 
     def validate_username(self, username):
@@ -60,14 +59,24 @@ class LoginForm(FlaskForm):
 
 
 class UpdateAccountForm(FlaskForm):
-    username = StringField('Имя пользователя',
+    username = StringField('Логин на сайте',
                            validators=[DataRequired(),
                                        Length(min=2, max=20)])
+    lastname = StringField('Фамилия пользователя:',
+                           validators=[DataRequired(),
+                                       Length(min=2, max=20)])
+    firstname = StringField('Имя пользователя:',
+                            validators=[DataRequired(),
+                                        Length(min=2, max=20)])
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
+
+    phone = StringField(label='Номер мобильного телефона', validators=[DataRequired(
+    ), Regexp(r'^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$')])
+
     picture = FileField('Обновить фото профиля',
                         validators=[FileAllowed(['jpg', 'png'])])
-    submit = SubmitField('Обновить')
+    submit = SubmitField('Изменить данные')
 
     def validate_username(self, username):
         if username.data != current_user.username:

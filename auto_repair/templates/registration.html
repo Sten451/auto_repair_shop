@@ -68,8 +68,7 @@
         {% endfor %}
       </div>
       {% else %} {{ form.phone }} {% endif %} 
-      {{ form.picture.label() }} 
-      {{ form.picture(class="form-control-file") }} 
+      
       {{ form.submit(class="button button_auth") }}
       <a class="button button_auth" href="{{ url_for('users.authentication') }}"
         >Вход на сайт</a
