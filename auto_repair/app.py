@@ -3,7 +3,8 @@ from flask_admin import Admin
 from config import Config
 from main.routes import main
 from users.routes import users
-from models import db, login_manager
+from models import db, login_manager, bcrypt
+#from flask_wtf.csrf import CSRFProtect
 
 
 app = Flask(__name__)
@@ -12,8 +13,10 @@ admin = Admin(app, name='microblog', template_mode='bootstrap3')
 
 app.register_blueprint(main)
 app.register_blueprint(users)
+#csrf = CSRFProtect(app)
 
 login_manager.init_app(app)
+bcrypt.init_app(app)
 
 db.init_app(app)
 with app.app_context():

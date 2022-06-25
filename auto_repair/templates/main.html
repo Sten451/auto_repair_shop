@@ -94,13 +94,20 @@
           <li class="nav-item">
             <a class="nav-link js-scroll" href="#contact">Связь с нами</a>
           </li>
+          {% if current_user.is_authenticated %}
           <li class="nav-item">
-            <a
-              class="nav-link js-scroll"
-              href="{{ url_for('users.registrations') }}"
-              >Регистрация</a
+            <a class="nav-link js-scroll" href="{{ url_for('users.account') }}"
+              >ЛК {{ current_user.username }}</a
+            >
             >
           </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll" href="{{ url_for('users.logout') }}"
+              >Выйти</a
+            >
+          </li>
+
+          {% else %}
           <li class="nav-item">
             <a
               class="nav-link js-scroll"
@@ -109,10 +116,13 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll" href="{{ url_for('users.account') }}"
-              >ЛК</a
+            <a
+              class="nav-link js-scroll"
+              href="{{ url_for('users.registrations') }}"
+              >Регистрация</a
             >
           </li>
+          {% endif %}
         </ul>
       </div>
     </div>

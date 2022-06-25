@@ -2,15 +2,16 @@ from datetime import datetime
 from flask_login import UserMixin
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-
+from flask_bcrypt import Bcrypt
 
 db = SQLAlchemy()
 login_manager = LoginManager()
+bcrypt = Bcrypt()
 
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.get(user_id)
+    return User.query.get(int(user_id))
 
 
 class User(db.Model, UserMixin):
@@ -24,15 +25,7 @@ class User(db.Model, UserMixin):
                            default='default.png')
     password = db.Column(db.String(60), nullable=False)
     phone = db.Column(db.String(15), nullable=False)
-    review = db.relationship('Review', backref='author', lazy=True)
-
-    def __init__(self, username, firstname, lastname, email, password, image_file):
-        self.username = username
-        self.firstname = firstname
-        self.lastname = lastname
-        self.email = email
-        self.password = password
-        self.image_file = image_file
+    #review = db.relationship('Review', backref='author', lazy=True)
 
     def __repr__(self):
         return f"Пользователь('{self.username}', " \
