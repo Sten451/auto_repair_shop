@@ -1,9 +1,9 @@
 from flask import Flask
 from flask_admin import Admin
-from config import Config
-from main.routes import main
-from users.routes import users
-from models import db, login_manager, bcrypt
+from auto_repair.config import Config
+from auto_repair.main.routes import main
+from auto_repair.users.routes import users
+from auto_repair.models import db, login_manager, bcrypt
 #from flask_wtf.csrf import CSRFProtect
 
 

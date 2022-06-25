@@ -1,10 +1,10 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField
+from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, \
     ValidationError, Regexp
 from flask_login import current_user
-from models import User
+from auto_repair.models import User
 
 
 class RegistrationForm(FlaskForm):
@@ -27,7 +27,7 @@ class RegistrationForm(FlaskForm):
 
     phone = StringField(label='Номер мобильного телефона', validators=[DataRequired(
     ), Regexp(r'^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$')], render_kw={"placeholder": "Номер мобильного телефона 11 цифр"})
-    
+
     submit = SubmitField('Зарегистрироваться')
 
     def validate_username(self, username):
