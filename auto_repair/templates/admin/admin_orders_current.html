@@ -1,0 +1,110 @@
+{% extends "account.html" %} {% block content_inner %}
+<div class="row">
+  <div class="col-xl-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title mb-4">Текущие заказ-наряды {{ context }}</h4>
+        <div class="table-responsive">
+          <table class="table table-centered">
+            <thead>
+              <tr>
+                <th scope="col">Дата</th>
+                <th scope="col">Номер</th>
+                <th scope="col">Клиент</th>
+                <th scope="col">Автомобиль</th>
+                <th scope="col">ФИО мастера</th>
+                <th scope="col">Виды работ</th>
+                <th scope="col">Статус</th>
+                <th scope="col">Сумма</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in context.current_orders %}
+              <tr>
+                <td>dgf{{ context.date }}</td>
+                <td>
+                  <a href="#" class="text-body fw-medium">{{ context.date }}</a>
+                </td>
+                <td>{{ context.date }}</td>
+                <td>{{ context.date }}</td>
+                <td>
+                  <span class="badge badge-soft-success font-size-12"
+                    >{{ context.date }}</span
+                  >
+                </td>
+              </tr>
+              {% endfor %}
+
+              <tr>
+                <td>15/01/2020</td>
+                <td>
+                  <a href="#" class="text-body fw-medium">#SK1235</a>
+                </td>
+                <td>Werner Berlin</td>
+                <td>$ 125</td>
+                <td>
+                  <span class="badge badge-soft-success font-size-12"
+                    >Paid</span
+                  >
+                </td>
+                <td>
+                  <a href="#" class="btn btn-primary btn-sm">View</a>
+                </td>
+              </tr>
+              <tr>
+                <td>16/01/2020</td>
+                <td>
+                  <a href="#" class="text-body fw-medium">#SK1236</a>
+                </td>
+                <td>Robert Jordan</td>
+                <td>$ 118</td>
+                <td>
+                  <span class="badge badge-soft-danger font-size-12"
+                    >Chargeback</span
+                  >
+                </td>
+                <td>
+                  <a href="#" class="btn btn-primary btn-sm">View</a>
+                </td>
+              </tr>
+              <tr>
+                <td>17/01/2020</td>
+                <td>
+                  <a href="#" class="text-body fw-medium">#SK1237</a>
+                </td>
+                <td>Daniel Finch</td>
+                <td>$ 115</td>
+                <td>
+                  <span class="badge badge-soft-success font-size-12"
+                    >Paid</span
+                  >
+                </td>
+                <td>
+                  <a href="#" class="btn btn-primary btn-sm">View</a>
+                </td>
+              </tr>
+              <tr>
+                <td>18/01/2020</td>
+                <td>
+                  <a href="#" class="text-body fw-medium">#SK1238</a>
+                </td>
+                <td>James Hawkins</td>
+                <td>$ 121</td>
+                <td>
+                  <span class="badge badge-soft-warning font-size-12"
+                    >Refund</span
+                  >
+                </td>
+                <td>
+                  <a href="#" class="btn btn-primary btn-sm">View</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
