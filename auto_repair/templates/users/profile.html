@@ -1,0 +1,145 @@
+{% extends "users/account.html" %} 
+{% block content_inner %} 
+<div class="row">
+            <div class="col-xl-6">
+              <div class="card">
+                <div class="card-body">
+                  <form method="POST" action="" enctype="multipart/form-data">
+                   {{ form.hidden_tag() }}
+                  <h4 class="card-title mb-4">Личные данные</h4>
+                  <div>
+                    <div class="pb-3 border-bottom">
+                      <div class="row align-items-center">
+                        <div class="col-8">
+                          {{ form.username.label(class="form-control-label") }}
+                          {% if form.username.errors %}
+                          {{ form.username(class="form-control form-control-lg is-invalid") }}
+                          <div class="invalid-feedback">
+                          {% for error in form.username.errors %}
+                              <span>{{ error }}</span>
+                          {% endfor %}
+                          </div>
+                          {% else %}
+                          {{ form.username(class="form-control form-control-lg") }}
+                          {% endif %}
+                          
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="pb-3 border-bottom">
+                      <div class="row align-items-center">
+                        <div class="col-8">
+                          {{ form.lastname.label(class="form-control-label") }}
+                          {% if form.lastname.errors %}
+                          {{ form.lastname(class="form-control form-control-lg is-invalid") }}
+                      <div class="invalid-feedback">
+                          {% for error in form.lastname.errors %}
+                              <span>{{ error }}</span>
+                          {% endfor %}
+                      </div>
+                          {% else %}
+                        {{ form.lastname(class="form-control form-control-lg") }}
+                        {% endif %}
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="pb-3 border-bottom">
+                      <div class="row align-items-center">
+                        <div class="col-8">
+                          {{ form.firstname.label(class="form-control-label") }}
+                          {% if form.firstname.errors %}
+                          {{ form.firstname(class="form-control form-control-lg is-invalid") }}
+                      <div class="invalid-feedback">
+                          {% for error in form.firstname.errors %}
+                              <span>{{ error }}</span>
+                          {% endfor %}
+                      </div>
+                          {% else %}
+                        {{ form.firstname(class="form-control form-control-lg") }}
+                        {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="pb-3 border-bottom">
+                      <div class="row align-items-center">
+                        <div class="col-8">
+                          {{ form.email.label(class="form-control-label") }}
+                          {% if form.email.errors %}
+                          {{ form.email(class="form-control form-control-lg is-invalid") }}
+                      <div class="invalid-feedback">
+                          {% for error in form.email.errors %}
+                              <span>{{ error }}</span>
+                          {% endfor %}
+                      </div>
+                          {% else %}
+                        {{ form.email(class="form-control form-control-lg") }}
+                        {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="pb-3 border-bottom">
+                      <div class="row align-items-center">
+                        <div class="col-8">
+                          {{ form.phone.label(class="form-control-label") }}
+                          {% if form.phone.errors %}
+                          {{ form.phone(class="form-control form-control-lg is-invalid") }}
+                          <div class="invalid-feedback">
+                          {% for error in form.phone.errors %}
+                              <span>{{ error }}</span>
+                          {% endfor %}
+                          </div>
+                          {% else %}
+                          {{ form.phone(class="form-control form-control-lg") }}
+                          {% endif %}
+                        </div>
+                        <div class="col-8">
+                          {{ form.picture.label() }}
+                          {{ form.picture(class="form-control-file") }}
+                          {% if form.picture.errors %}
+                          {% for error in form.picture.errors %}
+                          <span class="text-danger">{{ error }}</span></br>
+                          {% endfor %}
+                          {% endif %}
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="pb-3 border-bottom">
+                      <div class="row align-items-center">
+                        <div class="col-8">
+                          <p class="mb-2">Пароль</p>
+                          <h4 class="mb-0">
+                            <a href="#" class="btn btn-primary btn-sm"
+                              >Сменить пароль</a
+                            >
+                          </h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {{ form.submit(class="btn btn-outline-info") }}
+              </div>
+            </div>
+            </form>
+            
+          </div>
+          <!-- end row -->
+
+          
+{% endblock %}

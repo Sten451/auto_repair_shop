@@ -17,14 +17,18 @@
   <h1><i class="fa-solid fa-user"></i> Регистрация</h1>
   <fieldset>
     <form action="" method="POST">
-      {{ form.csrf_token }} {% if form.username.errors %} {{
-      form.username(class="form-control form-control-lg is-invalid") }}
+      {{ form.csrf_token }} 
+      {% if form.username.errors %} 
+      {{ form.username(class="form-control form-control-lg is-invalid") }}
       <div class="invalid-feedback">
         {% for error in form.username.errors %}
         <span>{{ error }}</span>
         {% endfor %}
       </div>
-      {% else %} {{ form.username }} {% endif %} {% if form.lastname.errors %}
+      {% else %} 
+      {{ form.username }} 
+      {% endif %} 
+      {% if form.lastname.errors %}
       {{ form.lastname(class="form-control form-control-lg is-invalid") }}
       <div class="invalid-feedback">
         {% for error in form.lastname.errors %}

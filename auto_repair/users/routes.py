@@ -1,6 +1,6 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
-from auto_repair.models import User, db, bcrypt
+from auto_repair.models import User, Order_user, db, bcrypt
 from auto_repair.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
 from auto_repair.users.utils import save_picture
 
@@ -23,7 +23,7 @@ def registrations():
         flash('Ваша учетная запись была создана!'
               ' Теперь вы можете войти в систему', 'success')
         return redirect(url_for('users.authentication'))
-    return render_template('registration.html', title='Register', form=form)
+    return render_template('users/registration.html', title='Register', form=form)
 
 
 @users.route("/user/authentication", methods=['GET', 'POST'])
@@ -43,7 +43,7 @@ def authentication():
         else:
             flash('Войти не удалось. Пожалуйста, '
                   'проверьте электронную почту и пароль', 'внимание')
-    return render_template('authentication.html', title='Аутентификация', form=form)
+    return render_template('users/authentication.html', title='Аутентификация', form=form)
 
 
 @users.route("/user/account", methods=['GET', 'POST'])
@@ -72,11 +72,36 @@ def account():
 
     image_file = url_for('static', filename='img/lk/users/' +
                                             current_user.image_file)
-    return render_template('account.html', title='Аккаунт',
+    return render_template('users/profile.html', title='Аккаунт',
                            image_file=image_file, form=form)
 
 
-@users.route("/logout")
+@users.route("/user/logout")
 def logout():
     logout_user()
+    return redirect(url_for('main.home'))
+
+
+@users.route("/user/admin_orders_current")
+@login_required
+def admin_orders_current():
+    if current_user.admin:
+        context = {}
+        context['count_user'] = User.query.filter(User.admin != True).count()
+        context['title'] = 'Текущие заказы'
+        context['current_orders'] = Order_user.query.filter(
+            Order_user.status != 'Закрыт')
+        return render_template('admin/admin_orders_current.html', context=context)
+    return redirect(url_for('main.home'))
+
+
+@users.route("/user/admin_stat")
+@login_required
+def admin_stat():
+    if current_user.admin:
+        context = {}
+        context['count_user'] = User.query.filter(User.admin != True).count()
+        context['order_user'] = Order_user.query.count()
+        context['title'] = 'Статистика'
+        return render_template('admin/admin_statistics.html', context=context)
     return redirect(url_for('main.home'))

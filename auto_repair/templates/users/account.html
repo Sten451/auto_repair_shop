@@ -206,50 +206,22 @@
                   </div>
                 </div>
               </div>
-           
 
               <div class="dropdown d-inline-block">
-                
-                  <img
-                    class="rounded-circle header-profile-user"
-                    src="{{ url_for('static', filename='img/lk/users/' + current_user.image_file) }}"
-                    alt="Header Avatar"
-                  />
-                  <span class="d-none d-xl-inline-block ms-1 text-white"
-                    >{{current_user.firstname}}</span
-                  >
-                  
-               
-                <a href="{{ url_for('users.logout') }}" class="btn btn-danger"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
-                <div class="dropdown-menu dropdown-menu-end">
-                  <!-- item-->
-                  <a class="dropdown-item" href="#"
-                    ><i class="bx bx-user font-size-16 align-middle me-1"></i>
-                    Profile</a
-                  >
-                  <a class="dropdown-item" href="#"
-                    ><i class="bx bx-wallet font-size-16 align-middle me-1"></i>
-                    My Wallet</a
-                  >
-                  <a class="dropdown-item d-block" href="#"
-                    ><span class="badge bg-success float-end">11</span
-                    ><i class="bx bx-wrench font-size-16 align-middle me-1"></i>
-                    Settings</a
-                  >
-                  <a class="dropdown-item" href="#"
-                    ><i
-                      class="bx bx-lock-open font-size-16 align-middle me-1"
-                    ></i>
-                    Lock screen</a
-                  >
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item text-danger" href="#"
-                    ><i
-                      class="bx bx-power-off font-size-16 align-middle me-1 text-danger"
-                    ></i>
-                    Logout</a
-                  >
-                </div>
+                <img
+                  class="rounded-circle header-profile-user"
+                  src="{{ url_for('static', filename='img/lk/users/' + current_user.image_file) }}"
+                  alt="Header Avatar"
+                />
+                <span class="d-none d-xl-inline-block ms-1 text-white"
+                  >{{current_user.username}}</span
+                >
+
+                <a
+                  href="{{ url_for('users.logout') }}"
+                  class="btn btn-danger ms-2"
+                  ><i class="fa-solid fa-arrow-right-from-bracket"></i
+                ></a>
               </div>
             </div>
             <div>
@@ -282,7 +254,7 @@
         <div class="h-100">
           <div class="user-wid text-center py-4">
             <div class="user-img">
-               <!--<img class="rounded-circle account-img" src="{{ image_file }}">-->
+              <!--<img class="rounded-circle account-img" src="{{ image_file }}">-->
               <img
                 src="{{ url_for('static', filename='img/lk/users/' + current_user.image_file) }}"
                 alt=""
@@ -305,26 +277,58 @@
               <li class="menu-title">Профиль</li>
 
               <li>
-                <a href="javascript: void(0);" class="waves-effect">
+                <a href="{{ url_for('users.account')}}" class="waves-effect">
                   <i class="fa-solid fa-user"></i>
-                  <span class="badge rounded-pill bg-danger float-end">6</span>
+                  <span class="badge rounded-pill bg-danger float-end"></span>
                   <span>Личные данные</span>
                 </a>
               </li>
               <li class="menu-title">Транспорт</li>
+              {% if current_user.admin %} {% else %}
               <li>
-                <a href="javascript: void(0);" class="waves-effect">
+                <a href="{{ url_for('cars.my_car') }}" class="waves-effect">
                   <i class="fa-solid fa-car"></i>
                   <span>Мои авто</span>
                 </a>
               </li>
+              <li>
+                <a
+                  href="{{ url_for('cars.add_my_car') }}"
+                  class="waves-effect"
+                >
+                  <i class="fa-solid fa-circle-plus"></i>
+                  <span>Добавить авто</span>
+                </a>
+              </li>
+              {% endif %}
               <li class="menu-title">Заказы</li>
+              {% if current_user.admin %}
+              <li>
+                <a
+                  href="{{ url_for('users.admin_orders_current') }}"
+                  class="waves-effect"
+                >
+                  <i class="fa-solid fa-wrench"></i>
+                  <span>Текущие заказ-наряды</span>
+                </a>
+              </li>
+              {% else %}
               <li>
                 <a href="javascript: void(0);" class="waves-effect">
                   <i class="fa-solid fa-cart-shopping"></i>
                   <span>Мои заказы</span>
                 </a>
               </li>
+              {% endif %} {% if current_user.admin %}
+              <li class="menu-title">Статистика</li>
+              <li>
+                <a href="{{ url_for('users.admin_stat')}}" class="waves-effect">
+                  <i class="fa-solid fa-book-journal-whills"></i>
+                  <span>Общая статистика</span>
+                </a>
+              </li>
+
+              {% else %}
               <li class="menu-title">Техподдержка</li>
               <li>
                 <a href="javascript: void(0);" class="waves-effect">
@@ -338,6 +342,7 @@
                   <span>Оставить отзыв</span>
                 </a>
               </li>
+              {% endif %}
             </ul>
           </div>
           <!-- Sidebar -->
@@ -353,7 +358,12 @@
                 class="page-title-box d-flex align-items-center justify-content-between"
               >
                 <h4 class="page-title mb-0 font-size-18">
-                  Личный кабинет пользователя
+                  {% if current_user.admin %} Личный кабинет администратора
+                  сайта
+                  <a class="btn btn-primary" href="/admin"
+                    >Вход в панель администратора</a
+                  >
+                  {% else %} Личный кабинет клиента {% endif %}
                 </h4>
 
                 <div class="page-title-right">
@@ -374,270 +384,9 @@
             </div>
           </div>
           <!-- end page title -->
-
-          <div class="row">
-            <div class="col-xl-6">
-              <div class="card">
-                <div class="card-body">
-                  <form method="POST" action="" enctype="multipart/form-data">
-                   {{ form.hidden_tag() }}
-                  <h4 class="card-title mb-4">Личные данные</h4>
-                  <div>
-                    <div class="pb-3 border-bottom">
-                      <div class="row align-items-center">
-                        <div class="col-8">
-                          {{ form.username.label(class="form-control-label") }}
-                          {% if form.username.errors %}
-                          {{ form.username(class="form-control form-control-lg is-invalid") }}
-                          <div class="invalid-feedback">
-                          {% for error in form.username.errors %}
-                              <span>{{ error }}</span>
-                          {% endfor %}
-                          </div>
-                          {% else %}
-                          {{ form.username(class="form-control form-control-lg") }}
-                          {% endif %}
-                          
-                        </div>
-                        
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="pb-3 border-bottom">
-                      <div class="row align-items-center">
-                        <div class="col-8">
-                          {{ form.lastname.label(class="form-control-label") }}
-                          {% if form.lastname.errors %}
-                          {{ form.lastname(class="form-control form-control-lg is-invalid") }}
-                      <div class="invalid-feedback">
-                          {% for error in form.lastname.errors %}
-                              <span>{{ error }}</span>
-                          {% endfor %}
-                      </div>
-                          {% else %}
-                        {{ form.lastname(class="form-control form-control-lg") }}
-                        {% endif %}
-                          
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="pb-3 border-bottom">
-                      <div class="row align-items-center">
-                        <div class="col-8">
-                          {{ form.firstname.label(class="form-control-label") }}
-                          {% if form.firstname.errors %}
-                          {{ form.firstname(class="form-control form-control-lg is-invalid") }}
-                      <div class="invalid-feedback">
-                          {% for error in form.firstname.errors %}
-                              <span>{{ error }}</span>
-                          {% endfor %}
-                      </div>
-                          {% else %}
-                        {{ form.firstname(class="form-control form-control-lg") }}
-                        {% endif %}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <div class="pb-3 border-bottom">
-                      <div class="row align-items-center">
-                        <div class="col-8">
-                          {{ form.email.label(class="form-control-label") }}
-                          {% if form.email.errors %}
-                          {{ form.email(class="form-control form-control-lg is-invalid") }}
-                      <div class="invalid-feedback">
-                          {% for error in form.email.errors %}
-                              <span>{{ error }}</span>
-                          {% endfor %}
-                      </div>
-                          {% else %}
-                        {{ form.email(class="form-control form-control-lg") }}
-                        {% endif %}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <div class="pb-3 border-bottom">
-                      <div class="row align-items-center">
-                        <div class="col-8">
-                          {{ form.phone.label(class="form-control-label") }}
-                          {% if form.phone.errors %}
-                          {{ form.phone(class="form-control form-control-lg is-invalid") }}
-                          <div class="invalid-feedback">
-                          {% for error in form.phone.errors %}
-                              <span>{{ error }}</span>
-                          {% endfor %}
-                          </div>
-                          {% else %}
-                          {{ form.phone(class="form-control form-control-lg") }}
-                          {% endif %}
-                        </div>
-                        <div class="col-8">
-                          {{ form.picture.label() }}
-                          {{ form.picture(class="form-control-file") }}
-                          {% if form.picture.errors %}
-                          {% for error in form.picture.errors %}
-                          <span class="text-danger">{{ error }}</span></br>
-                          {% endfor %}
-                          {% endif %}
-                          
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <div class="pb-3 border-bottom">
-                      <div class="row align-items-center">
-                        <div class="col-8">
-                          <p class="mb-2">Пароль</p>
-                          <h4 class="mb-0">
-                            <a href="#" class="btn btn-primary btn-sm"
-                              >Сменить пароль</a
-                            >
-                          </h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {{ form.submit(class="btn btn-outline-info") }}
-              </div>
-            </div>
-            </form>
-            <div class="col-xl-3">
-              <div class="card">
-                <div class="card-body">
-                  <div class="d-flex align-items-start">
-                    <div class="avatar-sm font-size-20 me-3">
-                      <span
-                        class="avatar-title bg-soft-primary text-primary rounded"
-                      >
-                        <i class="mdi mdi-tag-plus-outline"></i>
-                      </span>
-                    </div>
-                    <div class="flex-1">
-                      <div class="font-size-16 mt-2">Моя машина</div>
-                    </div>
-                  </div>
-                  <h4 class="mt-4">бмв</h4>
-                  <div class="row">
-                    <div class="col-7">
-                      <p class="mb-0">
-                        <span class="text-success me-2">
-                          х000со777 <i class="mdi mdi-arrow-up"></i>
-                        </span>
-                      </p>
-                    </div>
-                    <a href="#" class="btn btn-primary btn-sm"
-                      >Изменить данные</a
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- end row -->
-
-          <div class="row">
-            <div class="col-xl-12">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title mb-4">Latest Transactions</h4>
-
-                  <div class="table-responsive">
-                    <table class="table table-centered">
-                      <thead>
-                        <tr>
-                          <th scope="col">Date</th>
-                          <th scope="col">Id no.</th>
-                          <th scope="col">Billing Name</th>
-                          <th scope="col">Amount</th>
-                          <th scope="col" colspan="2">Payment Status</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>15/01/2020</td>
-                          <td>
-                            <a href="#" class="text-body fw-medium">#SK1235</a>
-                          </td>
-                          <td>Werner Berlin</td>
-                          <td>$ 125</td>
-                          <td>
-                            <span class="badge badge-soft-success font-size-12"
-                              >Paid</span
-                            >
-                          </td>
-                          <td>
-                            <a href="#" class="btn btn-primary btn-sm">View</a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>16/01/2020</td>
-                          <td>
-                            <a href="#" class="text-body fw-medium">#SK1236</a>
-                          </td>
-                          <td>Robert Jordan</td>
-                          <td>$ 118</td>
-                          <td>
-                            <span class="badge badge-soft-danger font-size-12"
-                              >Chargeback</span
-                            >
-                          </td>
-                          <td>
-                            <a href="#" class="btn btn-primary btn-sm">View</a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>17/01/2020</td>
-                          <td>
-                            <a href="#" class="text-body fw-medium">#SK1237</a>
-                          </td>
-                          <td>Daniel Finch</td>
-                          <td>$ 115</td>
-                          <td>
-                            <span class="badge badge-soft-success font-size-12"
-                              >Paid</span
-                            >
-                          </td>
-                          <td>
-                            <a href="#" class="btn btn-primary btn-sm">View</a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>18/01/2020</td>
-                          <td>
-                            <a href="#" class="text-body fw-medium">#SK1238</a>
-                          </td>
-                          <td>James Hawkins</td>
-                          <td>$ 121</td>
-                          <td>
-                            <span class="badge badge-soft-warning font-size-12"
-                              >Refund</span
-                            >
-                          </td>
-                          <td>
-                            <a href="#" class="btn btn-primary btn-sm">View</a>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          {% block content_inner %} {% endblock %}
           <!-- end row -->
         </div>
-        <!-- End Page-content -->
 
         <footer class="footer">
           <div class="container-fluid">
