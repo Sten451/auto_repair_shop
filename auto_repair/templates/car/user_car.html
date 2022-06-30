@@ -1,0 +1,64 @@
+{% extends "users/account.html" %} {% block content_inner %} {% if cars %} {% for car
+in cars %}
+<div class="row">
+  <div class="col-xl-4">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex align-items-start">
+          <div class="avatar-sm font-size-20 me-3">
+            <span class="avatar-title bg-soft-primary text-primary rounded">
+              <i class="fa-solid fa-car"></i>
+            </span>
+          </div>
+          <div class="flex-1">
+            <div class="font-size-16 mt-2">Моя машина</div>
+          </div>
+        </div>
+
+        <div class="col-10 mt-1 form-control-lg">
+          <span class="text-info">Модель:</span> {{ car.model }}
+        </div>
+        <div class="col-10 mt-1 form-control-lg">
+          <span class="text-info">VIN:</span> {{ car.vin }}
+        </div>
+        <div class="col-10 mt-1 form-control-lg">
+          <span class="text-info">Номер:</span> {{ car.number }}
+        </div>
+
+        <div class="col-10 mt-3">
+          <a
+            class="btn btn-primary ms-2"
+            href="{{ url_for('cars.user_car_update', car_id=car.id)}}"
+            >Изменить</a
+          >
+          <a
+            class="btn btn-danger ms-2"
+            href="{{ url_for('cars.user_car_delete', car_id=car.id)}}"
+            >Удалить</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %} {% else %}
+<div class="col-lg-10">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Добавьте свои автомобили</h4>
+      <p class="card-title-desc">
+        Для записи в автосервис требуется добавить хотя бы одно транспортное
+        средство
+      </p>
+      <div class="d-grid gap-2">
+        <a
+          href="{{ url_for('cars.add_my_car')}}"
+          class="btn btn-primary btn-lg btn-block waves-effect waves-light"
+          >Добавить автомобиль</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endif %} {% endblock %}

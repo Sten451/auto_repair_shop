@@ -17,14 +17,6 @@ class MyModelView(ModelView):
     pass
 
 
-class UserView(BaseView):
-    @expose('/')
-    def page_admin(self):
-        context = {}
-        context['count_user'] = User.query.filter(User.admin != True).count() #! рефакторинг записи not User.admin не работает
-        return self.render('admin.html', context=context)
-
-
 class MyAdminView(AdminIndexView):
     """Класс позволяет входить в админ зону только администратору"""
 

@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, PasswordField, SubmitField, SelectField
+from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, \
     ValidationError, Regexp
 from flask_login import current_user
@@ -112,21 +112,3 @@ class ResetPasswordForm(FlaskForm):
                                      validators=[DataRequired(),
                                                  EqualTo('password')])
     submit = SubmitField('Переустановить пароль')
-
-
-class CarForm(FlaskForm):
-    choices_model = [
-        ('Audi', 'Audi'),
-        ('BMW', 'BMW'),
-        ('Mercedes', 'Mercedes'),
-        ('Volkswagen', 'Volkswagen'),
-        ('Lexus', 'Lexus'),
-        ('Other', 'Other'),
-    ]
-    model = SelectField('Модель авто:', choices=choices_model,
-                        render_kw={"placeholder": "Модель"})
-    vin = StringField('VIN', validators=[DataRequired()], render_kw={
-        "placeholder": "VIN номер"})
-    number = StringField('Регистрационный знак', validators=[DataRequired()], render_kw={
-        "placeholder": "Регистрационный знак"})
-    submit = SubmitField('Изменить данные')

@@ -217,38 +217,11 @@
                   >{{current_user.username}}</span
                 >
 
-                <a href="{{ url_for('users.logout') }}" class="btn btn-danger"
+                <a
+                  href="{{ url_for('users.logout') }}"
+                  class="btn btn-danger ms-2"
                   ><i class="fa-solid fa-arrow-right-from-bracket"></i
                 ></a>
-                <div class="dropdown-menu dropdown-menu-end">
-                  <!-- item-->
-                  <a class="dropdown-item" href="#"
-                    ><i class="bx bx-user font-size-16 align-middle me-1"></i>
-                    Profile</a
-                  >
-                  <a class="dropdown-item" href="#"
-                    ><i class="bx bx-wallet font-size-16 align-middle me-1"></i>
-                    My Wallet</a
-                  >
-                  <a class="dropdown-item d-block" href="#"
-                    ><span class="badge bg-success float-end">11</span
-                    ><i class="bx bx-wrench font-size-16 align-middle me-1"></i>
-                    Settings</a
-                  >
-                  <a class="dropdown-item" href="#"
-                    ><i
-                      class="bx bx-lock-open font-size-16 align-middle me-1"
-                    ></i>
-                    Lock screen</a
-                  >
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item text-danger" href="#"
-                    ><i
-                      class="bx bx-power-off font-size-16 align-middle me-1 text-danger"
-                    ></i>
-                    Logout</a
-                  >
-                </div>
               </div>
             </div>
             <div>
@@ -313,9 +286,18 @@
               <li class="menu-title">Транспорт</li>
               {% if current_user.admin %} {% else %}
               <li>
-                <a href="{{ url_for('users.user_car') }}" class="waves-effect">
+                <a href="{{ url_for('cars.my_car') }}" class="waves-effect">
                   <i class="fa-solid fa-car"></i>
                   <span>Мои авто</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="{{ url_for('cars.add_my_car') }}"
+                  class="waves-effect"
+                >
+                  <i class="fa-solid fa-circle-plus"></i>
+                  <span>Добавить авто</span>
                 </a>
               </li>
               {% endif %}

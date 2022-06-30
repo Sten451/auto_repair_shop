@@ -1,7 +1,7 @@
-from flask import render_template, url_for, flash, redirect, request, Blueprint, abort
+from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
-from auto_repair.models import User, Order_user, Auto_user, db, bcrypt
-from auto_repair.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm, CarForm
+from auto_repair.models import User, Order_user, db, bcrypt
+from auto_repair.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
 from auto_repair.users.utils import save_picture
 
 
@@ -23,7 +23,7 @@ def registrations():
         flash('Ваша учетная запись была создана!'
               ' Теперь вы можете войти в систему', 'success')
         return redirect(url_for('users.authentication'))
-    return render_template('registration.html', title='Register', form=form)
+    return render_template('users/registration.html', title='Register', form=form)
 
 
 @users.route("/user/authentication", methods=['GET', 'POST'])
@@ -43,7 +43,7 @@ def authentication():
         else:
             flash('Войти не удалось. Пожалуйста, '
                   'проверьте электронную почту и пароль', 'внимание')
-    return render_template('authentication.html', title='Аутентификация', form=form)
+    return render_template('users/authentication.html', title='Аутентификация', form=form)
 
 
 @users.route("/user/account", methods=['GET', 'POST'])
@@ -72,7 +72,7 @@ def account():
 
     image_file = url_for('static', filename='img/lk/users/' +
                                             current_user.image_file)
-    return render_template('profile.html', title='Аккаунт',
+    return render_template('users/profile.html', title='Аккаунт',
                            image_file=image_file, form=form)
 
 
@@ -80,40 +80,6 @@ def account():
 def logout():
     logout_user()
     return redirect(url_for('main.home'))
-
-
-@users.route("/user/cars", methods=['GET', 'POST'])
-@login_required
-def user_car():
-    form = CarForm()
-    car = Auto_user.query.filter_by(user_id=current_user.id).first()
-    if car:  # ! Если у него есть машина, то можем изменять
-        if form.validate_on_submit():
-            car.model = form.model.data
-            car.vin = form.vin.data
-            car.number = form.number.data
-            db.session.commit()
-            return redirect(url_for('users.user_car'))
-        elif request.method == 'GET':
-            form.model.data = car.model
-            form.vin.data = car.vin
-            form.number.data = car.number
-            context = {}
-            context['car'] = str(car.id)
-            return render_template('/user_car.html', context=context, form=form)
-    return render_template('/user_car.html', context=context, form=form)
-
-
-@users.route("/user/delete_car/<int:car_id>")
-@login_required
-def user_car_delete(car_id):
-    print('car_id', car_id)
-    car = Auto_user.query.get_or_404(car_id)
-    if Auto_user.user_id != current_user.id:
-        abort(403)
-    db.session.delete(car)
-    db.session.commit()
-    return render_template('/user_car.html')
 
 
 @users.route("/user/admin_orders_current")
