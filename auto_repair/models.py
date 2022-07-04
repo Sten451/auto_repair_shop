@@ -1,16 +1,21 @@
+import enum
+import jwt
 from datetime import datetime
+from time import time
 from flask_login import UserMixin
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
 from flask_babel import Babel
-import enum
+from flask_mail import Mail
+from flask import current_app
 
 
 db = SQLAlchemy()
 login_manager = LoginManager()
 bcrypt = Bcrypt()
 babel = Babel()
+mail = Mail()
 
 
 @login_manager.user_loader
@@ -32,9 +37,19 @@ class User(db.Model, UserMixin):
     admin = db.Column(db.Boolean, default=False)
     #review = db.relationship('Review', backref='author', lazy=True)
 
-    def __repr__(self):
-        return f"Пользователь('{self.username}', " \
-            f"'{self.email}', '{self.image_file}')"
+    def get_reset_token(self, expires_sec=1800):
+        return jwt.encode(
+            {'user_id': self.id, 'exp': time() + expires_sec},
+            current_app.config['SECRET_KEY'], algorithm='HS256')
+
+    @staticmethod
+    def verify_reset_token(token):
+        try:
+            user_id = jwt.decode(token, current_app.config['SECRET_KEY'],
+                                 algorithms=['HS256'])['user_id']
+        except Exception:
+            return None
+        return User.query.get(user_id)
 
 
 class Review(db.Model):

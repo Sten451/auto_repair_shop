@@ -76,6 +76,10 @@ class UpdateAccountForm(FlaskForm):
 
     picture = FileField('Обновить фото профиля',
                         validators=[FileAllowed(['jpg', 'png'])])
+
+    password = PasswordField('Пароль:', render_kw={
+        "placeholder": "Введите новый пароль"})
+
     submit = SubmitField('Изменить данные')
 
     def validate_username(self, username):
@@ -95,20 +99,22 @@ class UpdateAccountForm(FlaskForm):
 
 class RequestResetForm(FlaskForm):
     email = StringField('Email',
-                        validators=[DataRequired(), Email()])
+                        validators=[DataRequired(), Email()], render_kw={
+                            "placeholder": "Введите email"})
     submit = SubmitField('Изменить пароль')
 
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user is None:
-            raise ValidationError('Аккаунт с данным email-адресом '
-                                  'отсутствует. '
-                                  'Вы можете зарегистрировать его')
+            raise ValidationError(
+                'Аккаунт с данным email-адресом отсутствует.')
 
 
 class ResetPasswordForm(FlaskForm):
-    password = PasswordField('Пароль:', validators=[DataRequired()])
-    confirm_password = PasswordField('Подтвердите пароль',
+    password = PasswordField('Пароль:', validators=[DataRequired()], render_kw={
+        "placeholder": "Введите новый пароль"})
+    confirm_password = PasswordField('Подтвердите пароль:',
                                      validators=[DataRequired(),
-                                                 EqualTo('password')])
-    submit = SubmitField('Переустановить пароль')
+                                                 EqualTo('password')], render_kw={
+                                         "placeholder": "Подтвердите новый пароль"})
+    submit = SubmitField('Изменить пароль')

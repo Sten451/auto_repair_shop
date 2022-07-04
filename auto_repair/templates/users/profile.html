@@ -104,6 +104,32 @@
                           {{ form.phone(class="form-control form-control-lg") }}
                           {% endif %}
                         </div>
+                         </div>
+                    </div>
+                  </div>
+                         <div>
+                    <div class="pb-3 border-bottom">
+                      <div class="row align-items-center">
+                        <div class="col-8">
+                          {{ form.password.label(class="form-control-label") }}
+                          {% if form.password.errors %}
+                          {{ form.password(class="form-control form-control-lg is-invalid") }}
+                          <div class="invalid-feedback">
+                          {% for error in form.password.errors %}
+                              <span>{{ error }}</span>
+                          {% endfor %}
+                          </div>
+                          {% else %}
+                          {{ form.password(class="form-control form-control-lg") }}
+                          {% endif %}
+                          
+                        </div>
+                         </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="pb-3 border-bottom">
+                      <div class="row align-items-center">
                         <div class="col-8">
                           {{ form.picture.label() }}
                           {{ form.picture(class="form-control-file") }}
@@ -118,20 +144,7 @@
                     </div>
                   </div>
 
-                  <div>
-                    <div class="pb-3 border-bottom">
-                      <div class="row align-items-center">
-                        <div class="col-8">
-                          <p class="mb-2">Пароль</p>
-                          <h4 class="mb-0">
-                            <a href="#" class="btn btn-primary btn-sm"
-                              >Сменить пароль</a
-                            >
-                          </h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  
                 </div>
                 {{ form.submit(class="btn btn-outline-info") }}
               </div>
@@ -141,5 +154,4 @@
           </div>
           <!-- end row -->
 
-          
 {% endblock %}

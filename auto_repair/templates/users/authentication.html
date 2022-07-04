@@ -24,11 +24,14 @@
         <li>{{ message }}</li>
         {% endfor %}
       </ul>
-      {% else %} {% endif %} {% endwith %} {{ form.username }}
-      {{ form.password }} {{ form.submit(class="button button_auth") }}
+      {% else %} {% endif %} {% endwith %} {{ form.username }} {{ form.password
+      }} {{ form.submit(class="button button_auth") }}
 
       <a class="button button_auth" href="{{ url_for('users.registrations') }}"
         >Зарегистрироваться</a
+      >
+      <a class="button button_auth" href="{{ url_for('users.reset_request') }}"
+        >Восстановление пароля</a
       >
     </form>
   </fieldset>
