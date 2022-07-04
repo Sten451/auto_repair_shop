@@ -54,6 +54,7 @@ def user_car_update(car_id):
         db.session.commit()
         return redirect(url_for('cars.my_car'))
     elif request.method == 'GET':
+        # pass
         form.model.data = car.model
         form.vin.data = car.vin
         form.number.data = car.number

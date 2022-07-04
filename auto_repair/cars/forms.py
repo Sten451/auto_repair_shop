@@ -38,14 +38,12 @@ class CarFormUpdate(CarFormAdd, FlaskForm):
     submit = SubmitField('Изменить')
 
     def validate_vin(self, vin):
-        pass
-        """car = Auto_user.query.filter_by(vin=vin.data).first()
-        if car and car.id != :
-            raise ValidationError('Машина с таким VIN уже зарегистрирована')"""
+        car = Auto_user.query.filter_by(vin=vin.data).first()
+        if car and current_user.id != car.user_id:
+            raise ValidationError('Машина с таким VIN уже зарегистрирована')
 
     def validate_number(self, number):
-        pass
-        """car = Auto_user.query.filter_by(number=number.data).first()
-        if car:
+        car = Auto_user.query.filter_by(number=number.data).first()
+        if car and current_user.id != car.user_id:
             raise ValidationError(
-                'Машина с таким номером уже зарегистрирована')"""
+                'Машина с таким номером уже зарегистрирована')
