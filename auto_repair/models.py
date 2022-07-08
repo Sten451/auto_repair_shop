@@ -76,11 +76,21 @@ class Mechanic(db.Model):
     salary = db.Column(db.Integer)
 
 
-class Type_of_work(db.Model):
+class Category_of_work(db.Model):
+    """Модель категорий работ"""
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    #price = db.Column(db.Integer, nullable=False)
+    #user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+
+class Name_of_work(db.Model):
     """Модель видов работ"""
     id = db.Column(db.Integer, primary_key=True)
-    type = db.Column(db.String(100), nullable=False)
+    name = db.Column(db.String(100), nullable=False)
     price = db.Column(db.Integer, nullable=False)
+    category_id = db.Column(db.Integer, db.ForeignKey(
+        'category_of_work.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 
@@ -104,7 +114,7 @@ class Order_user(db.Model):
     mechanic_id = db.Column(
         db.Integer, db.ForeignKey('mechanic.id'), nullable=False)
     work_id = db.Column(db.Integer, db.ForeignKey(
-        'type_of_work.id'), nullable=False
+        'Name_of_work.id'), nullable=False
     )
     auto_id = db.Column(db.Integer, db.ForeignKey(
         'auto_user.id'), nullable=False)
