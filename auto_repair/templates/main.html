@@ -42,7 +42,7 @@
   </div>
   <nav class="navbar navbar-b navbar-expand-lg navbar-trans" id="mainNav">
     <div class="container">
-      <a class="navbar-brand js-scroll" href="index.html">
+      <a class="navbar-brand js-scroll" href="{{url_for('main.home')}}">
         <img
           src="{{ url_for('static', filename='img/logo.png') }}"
           class="white-logo"
@@ -98,7 +98,6 @@
           <li class="nav-item">
             <a class="nav-link js-scroll" href="{{ url_for('users.account') }}"
               >ЛК {{ current_user.username }}</a
-            >
             >
           </li>
           <li class="nav-item">
@@ -171,7 +170,9 @@
                     БЫСТРО И КАЧЕСТВЕННО.
                   </p>
                   <div class="home-button-box home-slider-btn">
-                    <a href="#0" class="button home-btn js-scroll"
+                    <a
+                      href="{{ url_for('orders.create_order') }}"
+                      class="button home-btn js-scroll"
                       >Записаться на ремонт</a
                     >
                   </div>
@@ -210,7 +211,9 @@
                     ЛУЧШИЕ ЦЕНЫ.
                   </p>
                   <div class="home-button-box home-slider-btn">
-                    <a href="#0" class="button home-btn js-scroll"
+                    <a
+                      href="{{ url_for('orders.create_order') }}"
+                      class="button home-btn js-scroll"
                       >Записаться на ремонт</a
                     >
                   </div>
@@ -249,7 +252,9 @@
                     БЫСТРО И КАЧЕСТВЕННО.
                   </p>
                   <div class="home-button-box home-slider-btn">
-                    <a href="#0" class="button home-btn js-scroll"
+                    <a
+                      href="{{ url_for('orders.create_order') }}"
+                      class="button home-btn js-scroll"
                       >Записаться на ремонт</a
                     >
                   </div>

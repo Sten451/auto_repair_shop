@@ -9,6 +9,7 @@ from flask_bcrypt import Bcrypt
 from flask_babel import Babel
 from flask_mail import Mail
 from flask import current_app
+from flask_wtf.csrf import CSRFProtect
 
 
 db = SQLAlchemy()
@@ -16,6 +17,7 @@ login_manager = LoginManager()
 bcrypt = Bcrypt()
 babel = Babel()
 mail = Mail()
+csrf = CSRFProtect()
 
 
 @login_manager.user_loader
@@ -80,8 +82,8 @@ class Category_of_work(db.Model):
     """Модель категорий работ"""
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
-    #price = db.Column(db.Integer, nullable=False)
-    #user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    name_of_work = db.relationship(
+        'Name_of_work', backref='category_of_work', lazy=True)
 
 
 class Name_of_work(db.Model):
@@ -91,7 +93,7 @@ class Name_of_work(db.Model):
     price = db.Column(db.Integer, nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey(
         'category_of_work.id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    #user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 
 class Status(enum.Enum):
@@ -110,11 +112,12 @@ class Order_user(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime, nullable=False,
                      default=datetime.now)
+    date_work = db.Column(db.DateTime, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     mechanic_id = db.Column(
         db.Integer, db.ForeignKey('mechanic.id'), nullable=False)
     work_id = db.Column(db.Integer, db.ForeignKey(
-        'Name_of_work.id'), nullable=False
+        'name_of_work.id'), nullable=False
     )
     auto_id = db.Column(db.Integer, db.ForeignKey(
         'auto_user.id'), nullable=False)

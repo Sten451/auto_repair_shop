@@ -292,16 +292,13 @@
                 </a>
               </li>
               <li>
-                <a
-                  href="{{ url_for('cars.add_my_car') }}"
-                  class="waves-effect"
-                >
+                <a href="{{ url_for('cars.add_my_car') }}" class="waves-effect">
                   <i class="fa-solid fa-circle-plus"></i>
                   <span>Добавить авто</span>
                 </a>
               </li>
               {% endif %}
-              <li class="menu-title">Заказы</li>
+              <li class="menu-title">Ремонт</li>
               {% if current_user.admin %}
               <li>
                 <a
@@ -314,9 +311,18 @@
               </li>
               {% else %}
               <li>
-                <a href="javascript: void(0);" class="waves-effect">
+                <a
+                  href="{{ url_for('orders.create_order') }}"
+                  class="waves-effect"
+                >
                   <i class="fa-solid fa-cart-shopping"></i>
-                  <span>Мои заказы</span>
+                  <span>Записаться на ремонт</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="waves-effect">
+                  <i class="fa-solid fa-book-open-reader"></i>
+                  <span>История ремонтов</span>
                 </a>
               </li>
               {% endif %} {% if current_user.admin %}

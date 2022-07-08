@@ -4,8 +4,9 @@ from auto_repair.config import Config
 from auto_repair.main.routes import main, MyAdminView, MyModelView
 from auto_repair.users.routes import users
 from auto_repair.cars.routes import cars
+from auto_repair.orders.routes import orders
 from auto_repair.errors.handlers import errors
-from auto_repair.models import db, login_manager, bcrypt, babel, mail
+from auto_repair.models import db, login_manager, bcrypt, babel, mail, csrf
 from auto_repair.models import User, Order_user, Mechanic
 
 
@@ -21,11 +22,13 @@ app.register_blueprint(main)
 app.register_blueprint(users)
 app.register_blueprint(cars)
 app.register_blueprint(errors)
+app.register_blueprint(orders)
 
 login_manager.init_app(app)
 bcrypt.init_app(app)
 babel.init_app(app)
 mail.init_app(app)
+csrf.init_app(app)
 
 db.init_app(app)
 with app.app_context():
