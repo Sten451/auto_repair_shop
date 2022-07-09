@@ -75,12 +75,6 @@
           </li>
           <!-- <li class="nav-item"><a class="nav-link js-scroll" href="#about">About</a></li> -->
           <li class="nav-item">
-            <a class="nav-link js-scroll" href="#services">Сервис</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll" href="#packages">Прайс лист</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link js-scroll" href="#products">Наша продукция</a>
           </li>
           <li class="nav-item">
@@ -154,7 +148,7 @@
                   class="form-check-input"
                   type="checkbox"
                   id="checkboxNoLabel"
-                  value="{{item.name}}"
+                  value="{{item.id}}"
                   name="check_box"
                 />
               </p>
@@ -182,7 +176,7 @@
             >
               <option selected value="">........</option>
               {% for people in personal %}
-              <option value="{{people.name}}">{{people.name}}</option>
+              <option value="{{people.id}}">{{people.name}}</option>
               {% endfor %}
             </select>
           </div>
@@ -202,7 +196,7 @@
             >
               <option selected value="">........</option>
               {% for item in car %}
-              <option value="{{item.model}}">
+              <option value="{{item.id}}">
                 <b>{{item.model}}</b> {{item.number}}
               </option>
               {% endfor %}

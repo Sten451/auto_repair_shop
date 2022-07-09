@@ -86,16 +86,6 @@ class Category_of_work(db.Model):
         'Name_of_work', backref='category_of_work', lazy=True)
 
 
-class Name_of_work(db.Model):
-    """Модель видов работ"""
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    price = db.Column(db.Integer, nullable=False)
-    category_id = db.Column(db.Integer, db.ForeignKey(
-        'category_of_work.id'), nullable=False)
-    #user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
-
 class Status(enum.Enum):
     CONSIDERED = "Рассматривается"
     ACCEPTED = "Принят"
@@ -104,6 +94,14 @@ class Status(enum.Enum):
     OVER = 'Ремонт окончен. Ожидается оплата'
     PAID = 'Оплачено'
     CLOSED = 'Закрыт'
+
+
+order_work = db.Table('order_work',
+                      db.Column('order_user_id', db.Integer, db.ForeignKey(
+                          'order_user.id'), primary_key=True),
+                      db.Column('name_of_work_id', db.Integer, db.ForeignKey(
+                          'name_of_work.id'), primary_key=True)
+                      )
 
 
 class Order_user(db.Model):
@@ -116,9 +114,18 @@ class Order_user(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     mechanic_id = db.Column(
         db.Integer, db.ForeignKey('mechanic.id'), nullable=False)
-    work_id = db.Column(db.Integer, db.ForeignKey(
-        'name_of_work.id'), nullable=False
-    )
+
+    order_with_work = db.relationship('Name_of_work', secondary=order_work, lazy='subquery',
+                                      backref=db.backref('pages', lazy=True))
     auto_id = db.Column(db.Integer, db.ForeignKey(
         'auto_user.id'), nullable=False)
     status = db.Column(db.Enum(Status), default=Status.CONSIDERED)
+
+
+class Name_of_work(db.Model):
+    """Модель видов работ"""
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    price = db.Column(db.Integer, nullable=False)
+    category_id = db.Column(db.Integer, db.ForeignKey(
+        'category_of_work.id'), nullable=False)

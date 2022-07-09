@@ -1,0 +1,44 @@
+{% extends "users/account.html" %} {% block content_inner %}
+<div class="row">
+  <div class="col-xl-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title mb-4">Мои заказ-наряды</h4>
+        <div class="table-responsive">
+          <table class="table table-centered">
+            <thead>
+              <tr>
+                <th scope="col">Дата ремонта</th>
+                <th scope="col">Номер</th>
+                <th scope="col">Автомобиль</th>
+                <th scope="col">ФИО мастера</th>
+                <th scope="col">Виды работ</th>
+                <th scope="col">Статус</th>
+                <th scope="col">Сумма</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in orders %}
+              <tr>
+                <td>{{ order.date_work }}</td>
+                <td>{{ order.id }}</td>
+                <td>{{ order.auto_id.model }}</td>
+                <td>{{ order.mechanic_id }}</td>
+                <td>{{ order.pages }}</td>
+                <td>
+                  <span class="badge badge-soft-success font-size-12"
+                    >{{ order.status }}</span
+                  >
+                </td>
+                <td>{{ order.mechanic_id }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
