@@ -42,7 +42,7 @@
   </div>
   <nav class="navbar navbar-b navbar-expand-lg navbar-trans" id="mainNav">
     <div class="container">
-      <a class="navbar-brand js-scroll" href="index.html">
+      <a class="navbar-brand js-scroll" href="{{url_for('main.home')}}">
         <img
           src="{{ url_for('static', filename='img/logo.png') }}"
           class="white-logo"
@@ -71,10 +71,6 @@
       >
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link js-scroll active" href="#slider-home">Главная</a>
-          </li>
-          <!-- <li class="nav-item"><a class="nav-link js-scroll" href="#about">About</a></li> -->
-          <li class="nav-item">
             <a class="nav-link js-scroll" href="#services">Сервис</a>
           </li>
           <li class="nav-item">
@@ -98,7 +94,6 @@
           <li class="nav-item">
             <a class="nav-link js-scroll" href="{{ url_for('users.account') }}"
               >ЛК {{ current_user.username }}</a
-            >
             >
           </li>
           <li class="nav-item">
@@ -171,7 +166,9 @@
                     БЫСТРО И КАЧЕСТВЕННО.
                   </p>
                   <div class="home-button-box home-slider-btn">
-                    <a href="#0" class="button home-btn js-scroll"
+                    <a
+                      href="{{ url_for('orders.create_order') }}"
+                      class="button home-btn js-scroll"
                       >Записаться на ремонт</a
                     >
                   </div>
@@ -210,7 +207,9 @@
                     ЛУЧШИЕ ЦЕНЫ.
                   </p>
                   <div class="home-button-box home-slider-btn">
-                    <a href="#0" class="button home-btn js-scroll"
+                    <a
+                      href="{{ url_for('orders.create_order') }}"
+                      class="button home-btn js-scroll"
                       >Записаться на ремонт</a
                     >
                   </div>
@@ -249,7 +248,9 @@
                     БЫСТРО И КАЧЕСТВЕННО.
                   </p>
                   <div class="home-button-box home-slider-btn">
-                    <a href="#0" class="button home-btn js-scroll"
+                    <a
+                      href="{{ url_for('orders.create_order') }}"
+                      class="button home-btn js-scroll"
                       >Записаться на ремонт</a
                     >
                   </div>
@@ -475,141 +476,20 @@
 
     <div class="row">
       <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-        <div class="menu-product-info-box">
-          <h4 class="menu-product-details">
-            <a class="menu-product-title" href="#">БЕСПЛАТНЫЕ РАБОТЫ</a>
-          </h4>
-          <div class="menu-product-description">
-            <p>Установка щёток стеклоочистителя</p>
-            <p><span>Бесплатно</span></p>
+        <div class="col">
+          {% for product in products %}
+          <div class="menu-product-info-box">
+            <h4 class="menu-product-details">
+              <a class="menu-product-title" href="#">{{ product.title }}</a>
+            </h4>
+            {% for item in product.name_of_work %}
+            <div class="menu-product-description">
+              <p>{{item.name }}</p>
+              <p><span>{{item.price }}</span></p>
+            </div>
+            {% endfor %}
           </div>
-          <div class="menu-product-description">
-            <p>Расшифровка кодов ошибок</p>
-            <p><span>Бесплатно</span></p>
-          </div>
-          <div class="menu-product-description">
-            <p>Замена воздушного фильтра</p>
-            <p><span>Бесплатно</span></p>
-          </div>
-          <div class="menu-product-description">
-            <p>Зарядка аккумулятора</p>
-            <p><span>Бесплатно</span></p>
-          </div>
-        </div>
-        <div class="menu-product-info-box">
-          <h4 class="menu-product-details">
-            <a class="menu-product-title" href="#">ЗАМЕНА ЖИДКОСТЕЙ</a>
-          </h4>
-          <div class="menu-product-description">
-            <p>Замена моторного масла</p>
-            <p><span>1000.00</span></p>
-          </div>
-          <div class="menu-product-description">
-            <p>Замена масла в АКПП</p>
-            <p><span>5000.00</span></p>
-          </div>
-          <div class="menu-product-description">
-            <p>Замена тормозной жидкости</p>
-            <p><span>1500.00</span></p>
-          </div>
-          <div class="menu-product-description">
-            <p>Замена охлаждающей жидкости</p>
-            <p><span>2500.00</span></p>
-          </div>
-          <div class="menu-product-description">
-            <p>Замена жидкости в ГУР</p>
-            <p><span>1800.00</span></p>
-          </div>
-        </div>
-        <div class="menu-product-info-box">
-          <h4 class="menu-product-details">
-            <a class="menu-product-title" href="#">ТЕХНИЧЕСКОЕ ОБСЛУЖИВАНИЕ</a>
-          </h4>
-          <div class="menu-product-description">
-            <p>Замена галогенных ламп</p>
-            <p><span>500.00</span></p>
-          </div>
-          <div class="menu-product-description">
-            <p>Замена ксенона</p>
-            <p><span>3000.00</span></p>
-          </div>
-          <div class="menu-product-description">
-            <p>Замена фильтра салона</p>
-            <p><span>200.00</span></p>
-          </div>
-          <div class="menu-product-description">
-            <p>Замена свечей зажигания</p>
-            <p><span>800.00</span></p>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-        <div class="menu-product-info-box">
-          <h4 class="menu-product-details">
-            <a class="menu-product-title" href="#">ДЕЙТЕЛИНГ</a>
-          </h4>
-          <div class="menu-product-description">
-            <p>Полировка фар</p>
-            <p><span>2000.00</span></p>
-          </div>
-          <div class="menu-product-description">
-            <p>Полировка кузова</p>
-            <p><span>8000.00</span></p>
-          </div>
-          <div class="menu-product-description">
-            <p>Оклейка бронеплёнкой</p>
-            <p><span>15000.00</span></p>
-          </div>
-          <div class="menu-product-description">
-            <p>Химчистка салона</p>
-            <p><span>5000.00</span></p>
-          </div>
-        </div>
-        <div class="menu-product-info-box">
-          <h4 class="menu-product-details">
-            <a class="menu-product-title" href="#">ДИАГНОСТИКА</a>
-          </h4>
-          <div class="menu-product-description">
-            <p>Диагностика и заправка кондиционера</p>
-            <p><span>3000.00</span></p>
-          </div>
-          <div class="menu-product-description">
-            <p>Диагностика двигателя</p>
-            <p><span>1000.00</span></p>
-          </div>
-          <div class="menu-product-description">
-            <p>Диагностика ходовой части</p>
-            <p><span>1000.00</span></p>
-          </div>
-          <div class="menu-product-description">
-            <p>Диагностика томозной системы</p>
-            <p><span>1000.00</span></p>
-          </div>
-          <div class="menu-product-description">
-            <p>Сброс ошибок</p>
-            <p><span>500.00</span></p>
-          </div>
-        </div>
-        <div class="menu-product-info-box">
-          <h4 class="menu-product-details">
-            <a class="menu-product-title" href="#">ТЮНИНГ</a>
-          </h4>
-          <div class="menu-product-description">
-            <p>Замена прошивки</p>
-            <p><span>18000.00</span></p>
-          </div>
-          <div class="menu-product-description">
-            <p>Установка интеркулера</p>
-            <p><span>32000.00</span></p>
-          </div>
-          <div class="menu-product-description">
-            <p>Установка нулевого фильтра</p>
-            <p><span>6000.00</span></p>
-          </div>
-          <div class="menu-product-description">
-            <p>Замена турбины</p>
-            <p><span>78000.00</span></p>
-          </div>
+          {% endfor %}
         </div>
       </div>
     </div>

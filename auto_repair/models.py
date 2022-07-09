@@ -9,6 +9,7 @@ from flask_bcrypt import Bcrypt
 from flask_babel import Babel
 from flask_mail import Mail
 from flask import current_app
+from flask_wtf.csrf import CSRFProtect
 
 
 db = SQLAlchemy()
@@ -16,6 +17,7 @@ login_manager = LoginManager()
 bcrypt = Bcrypt()
 babel = Babel()
 mail = Mail()
+csrf = CSRFProtect()
 
 
 @login_manager.user_loader
@@ -80,18 +82,8 @@ class Category_of_work(db.Model):
     """Модель категорий работ"""
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
-    #price = db.Column(db.Integer, nullable=False)
-    #user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
-
-class Name_of_work(db.Model):
-    """Модель видов работ"""
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    price = db.Column(db.Integer, nullable=False)
-    category_id = db.Column(db.Integer, db.ForeignKey(
-        'category_of_work.id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    name_of_work = db.relationship(
+        'Name_of_work', backref='category_of_work', lazy=True)
 
 
 class Status(enum.Enum):
@@ -104,18 +96,36 @@ class Status(enum.Enum):
     CLOSED = 'Закрыт'
 
 
+order_work = db.Table('order_work',
+                      db.Column('order_user_id', db.Integer, db.ForeignKey(
+                          'order_user.id'), primary_key=True),
+                      db.Column('name_of_work_id', db.Integer, db.ForeignKey(
+                          'name_of_work.id'), primary_key=True)
+                      )
+
+
 class Order_user(db.Model):
     """Модель заказа пользователя"""
 
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime, nullable=False,
                      default=datetime.now)
+    date_work = db.Column(db.DateTime, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     mechanic_id = db.Column(
         db.Integer, db.ForeignKey('mechanic.id'), nullable=False)
-    work_id = db.Column(db.Integer, db.ForeignKey(
-        'Name_of_work.id'), nullable=False
-    )
+
+    order_with_work = db.relationship('Name_of_work', secondary=order_work, lazy='subquery',
+                                      backref=db.backref('pages', lazy=True))
     auto_id = db.Column(db.Integer, db.ForeignKey(
         'auto_user.id'), nullable=False)
     status = db.Column(db.Enum(Status), default=Status.CONSIDERED)
+
+
+class Name_of_work(db.Model):
+    """Модель видов работ"""
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    price = db.Column(db.Integer, nullable=False)
+    category_id = db.Column(db.Integer, db.ForeignKey(
+        'category_of_work.id'), nullable=False)
