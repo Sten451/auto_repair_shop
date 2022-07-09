@@ -8,7 +8,7 @@
           <table class="table table-centered">
             <thead>
               <tr>
-                <th scope="col">Дата ремонта</th>
+                <th scope="col">Дата начала ремонта</th>
                 <th scope="col">Номер</th>
                 <th scope="col">Автомобиль</th>
                 <th scope="col">ФИО мастера</th>
@@ -22,15 +22,24 @@
               <tr>
                 <td>{{ order.date_work }}</td>
                 <td>{{ order.id }}</td>
-                <td>{{ order.auto_id.model }}</td>
-                <td>{{ order.mechanic_id }}</td>
-                <td>{{ order.pages }}</td>
                 <td>
-                  <span class="badge badge-soft-success font-size-12"
-                    >{{ order.status }}</span
+                  {{ order.order_model.model }} {{ order.order_model.number }}
+                </td>
+                <td>{{ order.order_mechanic.name }}</td>
+                <td>
+                  {% for work in order.order_with_work %}
+                  <ul class="">
+                    <li>{{ work.name }}</li>
+                  </ul>
+                  {% endfor %}
+                </td>
+                <td>
+                  <span
+                    class="badge {% if order.current_status.name=="CONSIDERED" or order.current_status.name=="PAID" %}badge-soft-success {% elif order.current_status.name=='HOLD'%}badge-soft-danger {% else %}badge-soft-warning {% endif %} font-size-12"
+                    >{{ order.current_status.value }}</span
                   >
                 </td>
-                <td>{{ order.mechanic_id }}</td>
+                <td>{{ order.price }} рублей</td>
               </tr>
               {% endfor %}
             </tbody>

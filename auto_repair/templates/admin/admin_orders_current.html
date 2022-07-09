@@ -3,7 +3,7 @@
   <div class="col-xl-12">
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title mb-4">Текущие заказ-наряды {{ context }}</h4>
+        <h4 class="card-title mb-4">Текущие заказ-наряды: {{ context.count_orders }}</h4>
         <div class="table-responsive">
           <table class="table table-centered">
             <thead>
@@ -21,84 +21,29 @@
             <tbody>
               {% for order in context.current_orders %}
               <tr>
-                <td>dgf{{ context.date }}</td>
+                <td>{{ order.date_work }}</td>
+                <td>{{ order.id }}</td>
+                <td>{{ order.user_of_work.lastname }} {{ order.user_of_work.firstname }}</td>
                 <td>
-                  <a href="#" class="text-body fw-medium">{{ context.date }}</a>
+                  {{ order.order_model.model }} {{ order.order_model.number }}
                 </td>
-                <td>{{ context.date }}</td>
-                <td>{{ context.date }}</td>
+                <td>{{ order.order_mechanic.name }}</td>
                 <td>
-                  <span class="badge badge-soft-success font-size-12"
-                    >{{ context.date }}</span
+                  {% for work in order.order_with_work %}
+                  <ul class="">
+                    <li>{{ work.name }}</li>
+                  </ul>
+                  {% endfor %}
+                </td>
+                <td>
+                  <span
+                    class="badge {% if order.current_status.name=="CONSIDERED" or order.current_status.name=="PAID" %}badge-soft-success {% elif order.current_status.name=='HOLD'%}badge-soft-danger {% else %}badge-soft-warning {% endif %} font-size-12"
+                    >{{ order.current_status.value }}</span
                   >
                 </td>
+                <td>{{ order.price }} рублей</td>
               </tr>
-              {% endfor %}
-
-              <tr>
-                <td>15/01/2020</td>
-                <td>
-                  <a href="#" class="text-body fw-medium">#SK1235</a>
-                </td>
-                <td>Werner Berlin</td>
-                <td>$ 125</td>
-                <td>
-                  <span class="badge badge-soft-success font-size-12"
-                    >Paid</span
-                  >
-                </td>
-                <td>
-                  <a href="#" class="btn btn-primary btn-sm">View</a>
-                </td>
-              </tr>
-              <tr>
-                <td>16/01/2020</td>
-                <td>
-                  <a href="#" class="text-body fw-medium">#SK1236</a>
-                </td>
-                <td>Robert Jordan</td>
-                <td>$ 118</td>
-                <td>
-                  <span class="badge badge-soft-danger font-size-12"
-                    >Chargeback</span
-                  >
-                </td>
-                <td>
-                  <a href="#" class="btn btn-primary btn-sm">View</a>
-                </td>
-              </tr>
-              <tr>
-                <td>17/01/2020</td>
-                <td>
-                  <a href="#" class="text-body fw-medium">#SK1237</a>
-                </td>
-                <td>Daniel Finch</td>
-                <td>$ 115</td>
-                <td>
-                  <span class="badge badge-soft-success font-size-12"
-                    >Paid</span
-                  >
-                </td>
-                <td>
-                  <a href="#" class="btn btn-primary btn-sm">View</a>
-                </td>
-              </tr>
-              <tr>
-                <td>18/01/2020</td>
-                <td>
-                  <a href="#" class="text-body fw-medium">#SK1238</a>
-                </td>
-                <td>James Hawkins</td>
-                <td>$ 121</td>
-                <td>
-                  <span class="badge badge-soft-warning font-size-12"
-                    >Refund</span
-                  >
-                </td>
-                <td>
-                  <a href="#" class="btn btn-primary btn-sm">View</a>
-                </td>
-              </tr>
+               {% endfor %}
             </tbody>
           </table>
         </div>

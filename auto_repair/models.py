@@ -37,7 +37,8 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     phone = db.Column(db.String(15), nullable=False)
     admin = db.Column(db.Boolean, default=False)
-    #review = db.relationship('Review', backref='author', lazy=True)
+    user_of_work = db.relationship(
+        'Order_user', backref='user_of_work', lazy=True)
 
     def get_reset_token(self, expires_sec=1800):
         return jwt.encode(
@@ -69,6 +70,8 @@ class Auto_user(db.Model):
     vin = db.Column(db.String(100), nullable=False)
     number = db.Column(db.String(100), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    order_model = db.relationship(
+        'Order_user', backref='order_model', lazy=True, cascade="save-update")
 
 
 class Mechanic(db.Model):
@@ -76,6 +79,8 @@ class Mechanic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     salary = db.Column(db.Integer)
+    order_mechanic = db.relationship(
+        'Order_user', backref='order_mechanic', lazy=True)
 
 
 class Category_of_work(db.Model):
@@ -87,12 +92,12 @@ class Category_of_work(db.Model):
 
 
 class Status(enum.Enum):
-    CONSIDERED = "Рассматривается"
-    ACCEPTED = "Принят"
-    WORK = "В работе"
+    CONSIDERED = "Ждите одобрения"
+    ACCEPTED = "Можете приезжать к выбранному времени"
+    WORK = "Идёт ремонт"
     HOLD = 'Приостановлен до решения Заказчика'
     OVER = 'Ремонт окончен. Ожидается оплата'
-    PAID = 'Оплачено'
+    PAID = 'Оплачено. Можете забирать авто'
     CLOSED = 'Закрыт'
 
 
@@ -119,7 +124,8 @@ class Order_user(db.Model):
                                       backref=db.backref('pages', lazy=True))
     auto_id = db.Column(db.Integer, db.ForeignKey(
         'auto_user.id'), nullable=False)
-    status = db.Column(db.Enum(Status), default=Status.CONSIDERED)
+    current_status = db.Column(db.Enum(Status), default=Status.CONSIDERED)
+    price = db.Column(db.Float, nullable=False)
 
 
 class Name_of_work(db.Model):
