@@ -92,10 +92,10 @@ def logout():
 def admin_orders_current():
     if current_user.admin:
         context = {}
-        context['count_user'] = User.query.filter(User.admin != True).count()
-        context['title'] = 'Текущие заказы'
+        context['count_orders'] = Order_user.query.filter(
+            Order_user.current_status != 'CLOSED').count()
         context['current_orders'] = Order_user.query.filter(
-            Order_user.status != 'Закрыт')
+            Order_user.current_status != 'CLOSED')
         return render_template('admin/admin_orders_current.html', context=context)
     return redirect(url_for('main.home'))
 
