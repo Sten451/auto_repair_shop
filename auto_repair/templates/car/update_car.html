@@ -1,0 +1,65 @@
+{% extends "users/account.html" %} {% block content_inner %}
+
+<div class="col-xl-6">
+  <div class="card">
+    <div class="card-body">
+      <div class="d-flex align-items-start">
+        <div class="avatar-sm font-size-20 me-3">
+          <span class="avatar-title bg-soft-primary text-primary rounded">
+            <i class="fa-solid fa-car"></i>
+          </span>
+        </div>
+        <div class="flex-1">
+          <div class="font-size-16 mt-2">Изменить данные машины</div>
+        </div>
+      </div>
+      <form class="mt-3" action="" method="POST">
+        {{ form.csrf_token }}
+        <div class="col-10 mt-3">
+          {{ form.model.label(class="form-control-label") }} {% if
+          form.model.errors %} {{ form.model(class="form-control form-control-lg
+          is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.model.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+          {% else %} {{ form.model(class="form-control-lg form-select") }} {%
+          endif %}
+        </div>
+        <div class="col-10 mt-3">
+          {{ form.vin.label(class="form-control-label") }} {% if form.vin.errors
+          %} {{ form.vin(class="form-control form-control-lg is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.vin.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+          {% else %} {{ form.vin(class="form-control form-control-lg") }} {%
+          endif %}
+        </div>
+        <div class="col-10 mt-3">
+          {{ form.number.label(class="form-control-label") }} {% if
+          form.number.errors %} {{ form.number(class="form-control form-control-lg
+          is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.number.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+          {% else %} {{ form.number(class="form-control form-control-lg") }} {%
+          endif %}
+        </div>
+      
+
+      <div class="col-10 mt-3">
+        {{ form.submit(class="btn btn-outline-info") }}
+        </form>
+        
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

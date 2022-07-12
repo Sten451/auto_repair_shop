@@ -1,0 +1,45 @@
+{% extends "base.html" %} {% block title
+%}<title>Авторизация</title>{%endblock%} {% block link_head %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/auth.css') }}"
+  media="screen"
+  type="text/css"
+/>
+<link
+  href="http://fonts.googleapis.com/css?family=Open+Sans:400,700"
+  rel="stylesheet"
+  type="text/css"
+/>
+{% endblock %} {% block content %}
+
+<div id="login-form">
+  <h1><i class="fa-solid fa-lock"></i> Авторизация</h1>
+  <fieldset>
+    <form action="" method="POST">
+      {{ form.csrf_token }} {% with messages = get_flashed_messages() %} {% if
+      messages %}
+      <ul class="flashes">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% else %} {% endif %} {% endwith %} {{ form.username }} {{ form.password
+      }} {{ form.submit(class="button button_auth") }}
+
+      <a class="button button_auth" href="{{ url_for('users.registrations') }}"
+        >Зарегистрироваться</a
+      >
+      <a class="button button_auth" href="{{ url_for('users.reset_request') }}"
+        >Восстановление пароля</a
+      >
+    </form>
+  </fieldset>
+</div>
+
+{% endblock %} {% block js %}
+<script
+  src="https://kit.fontawesome.com/6e973e1134.js"
+  crossorigin="anonymous"
+></script>
+{% endblock %}

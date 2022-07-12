@@ -1,0 +1,89 @@
+{% extends "base.html" %} {% block title
+%}<title>Регистрация</title>{%endblock%} {% block link_head %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/auth.css') }}"
+  media="screen"
+  type="text/css"
+/>
+<link
+  href="http://fonts.googleapis.com/css?family=Open+Sans:400,700"
+  rel="stylesheet"
+  type="text/css"
+/>
+{% endblock %} {% block content %}
+
+<div id="login-form">
+  <h1><i class="fa-solid fa-user"></i> Регистрация</h1>
+  <fieldset>
+    <form action="" method="POST">
+      {{ form.csrf_token }} 
+      {% if form.username.errors %} 
+      {{ form.username(class="form-control form-control-lg is-invalid") }}
+      <div class="invalid-feedback">
+        {% for error in form.username.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+      {% else %} 
+      {{ form.username }} 
+      {% endif %} 
+      {% if form.lastname.errors %}
+      {{ form.lastname(class="form-control form-control-lg is-invalid") }}
+      <div class="invalid-feedback">
+        {% for error in form.lastname.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+      {% else %} {{ form.lastname }} {% endif %} {% if form.lastname.errors %}
+      {{ form.firstname(class="form-control form-control-lg is-invalid") }}
+      <div class="invalid-feedback">
+        {% for error in form.firstname.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+      {% else %} {{ form.firstname }} {% endif %} {% if form.password.errors %}
+      {{ form.password(class="form-control form-control-lg is-invalid") }}
+      <div class="invalid-feedback">
+        {% for error in form.password.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+      {% else %} {{ form.password }} {% endif %} {% if
+      form.confirm_password.errors %} {{
+      form.confirm_password(class="form-control form-control-lg is-invalid") }}
+      <div class="invalid-feedback">
+        {% for error in form.confirm_password.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+      {% else %} {{ form.confirm_password }} {% endif %} {% if form.email.errors
+      %} {{ form.email(class="form-control form-control-lg is-invalid") }}
+      <div class="invalid-feedback">
+        {% for error in form.email.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+      {% else %} {{ form.email }} {% endif %} {% if form.phone.errors %} {{
+      form.phone(class="form-control form-control-lg is-invalid") }}
+      <div class="invalid-feedback">
+        {% for error in form.phone.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+      {% else %} {{ form.phone }} {% endif %} 
+      
+      {{ form.submit(class="button button_auth") }}
+      <a class="button button_auth" href="{{ url_for('users.authentication') }}"
+        >Вход на сайт</a
+      >
+    </form>
+  </fieldset>
+</div>
+
+{% endblock %} {% block js %}
+<script
+  src="https://kit.fontawesome.com/6e973e1134.js"
+  crossorigin="anonymous"
+></script>
+{% endblock %}
