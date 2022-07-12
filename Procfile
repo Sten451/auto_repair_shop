@@ -1,1 +1,1 @@
-web: gunicorn auto_repair:app
+web: gunicorn auto_repair.app:app
