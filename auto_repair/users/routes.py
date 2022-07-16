@@ -87,15 +87,21 @@ def logout():
     return redirect(url_for('main.home'))
 
 
-@users.route("/user/admin_orders_current")
+@users.route("/user/admin_orders_current", methods=['GET', 'POST'])
 @login_required
 def admin_orders_current():
     if current_user.admin:
         context = {}
-        context['count_orders'] = Order_user.query.filter(
-            Order_user.current_status != 'CLOSED').count()
         context['current_orders'] = Order_user.query.filter(
-            Order_user.current_status != 'CLOSED')
+                Order_user.current_status != 'CLOSED')
+        context['count_orders'] = Order_user.query.filter(
+                Order_user.current_status != 'CLOSED').count()
+            
+        if request.method == 'POST':
+            select_status = (request.form.get('select_status')).split(',')
+            order = Order_user.query.filter_by(id=select_status[0]).first()
+            order.current_status = select_status[1]
+            db.session.commit()
         return render_template('admin/admin_orders_current.html', context=context)
     return redirect(url_for('main.home'))
 
