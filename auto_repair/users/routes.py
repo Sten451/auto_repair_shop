@@ -1,6 +1,6 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
-from auto_repair.models import User, Order_user, db, bcrypt
+from auto_repair.models import User, Order_user, Message, db, bcrypt
 from auto_repair.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
 from auto_repair.users.utils import save_picture, send_reset_email
 
@@ -94,14 +94,13 @@ def admin_orders_current():
         context = {}
         context['current_orders'] = Order_user.query.filter(
                 Order_user.current_status != 'CLOSED')
-        context['count_orders'] = Order_user.query.filter(
-                Order_user.current_status != 'CLOSED').count()
-            
         if request.method == 'POST':
             select_status = (request.form.get('select_status')).split(',')
             order = Order_user.query.filter_by(id=select_status[0]).first()
             order.current_status = select_status[1]
             db.session.commit()
+        context['count_orders'] = Order_user.query.filter(
+                Order_user.current_status != 'CLOSED').count()
         return render_template('admin/admin_orders_current.html', context=context)
     return redirect(url_for('main.home'))
 
@@ -152,3 +151,46 @@ def reset_token(token):
         return redirect(url_for('users.authentication'))
     return render_template('users/reset_token.html',
                            title='Сброс пароля', form=form)
+
+
+@users.route("/user/admin_messages", methods=['GET', 'POST'])
+@login_required
+def admin_messages():
+    if current_user.admin:
+        context = {}
+        context['messages_users'] = Message.query.filter(Message.
+                                                     current_status_message != 'CLOSED')
+        if request.method == 'POST':
+            select_status = (request.form.get('select_status')).split(',')
+            message = Message.query.filter_by(id=select_status[0]).first()
+            message.current_status_message = select_status[1]
+            db.session.commit()
+        context['count_new_message'] = Message.query.filter(Message.
+                                                            current_status_message != 'CLOSED').count()
+        return render_template('admin/admin_messages.html', context=context)
+    return redirect(url_for('main.home'))
+
+
+@users.route("/user/support", methods=['GET'])
+@login_required
+def message_history():
+    messages = Message.query.filter_by(user_id=current_user.id)
+    return render_template('users/messages.html', messages=messages)
+
+
+@users.route("/admin_messages_close", methods=['GET', 'POST'])
+@login_required
+def admin_messages_close():
+    if current_user.admin:
+        context = {}
+        context['messages_users'] = Message.query.filter(Message.
+                                                     current_status_message == 'CLOSED')
+        if request.method == 'POST':
+            select_status = (request.form.get('select_status')).split(',')
+            message = Message.query.filter_by(id=select_status[0]).first()
+            message.current_status_message = select_status[1]
+            db.session.commit()
+        context['count_new_message'] = Message.query.filter(Message.
+                                                            current_status_message == 'CLOSED').count()
+        return render_template('admin/admin_messages.html', context=context)
+    return redirect(url_for('main.home'))

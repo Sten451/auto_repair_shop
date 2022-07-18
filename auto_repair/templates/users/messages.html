@@ -1,0 +1,45 @@
+{% extends "users/account.html" %} {% block content_inner %}
+<div class="row">
+  <div class="col-xl-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title mb-4">История Ваших сообщения</h4>
+        <div class="table-responsive">
+          <table class="table table-centered">
+            <thead>
+              <tr>
+                <th scope="col">Дата</th>
+                <th scope="col">Номер</th>
+                <th scope="col">Тема</th>
+                <th scope="col">Сообщение</th>
+                <th scope="col">Статус</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for message in messages %}
+              <tr>
+                <td>{{ message.date }}</td>
+                <td>{{ message.id }}</td>
+                <td>{{ message.title }}</td>
+                <td style="max-width: 500px;">{{ message.message }}</td>
+                
+               
+                  <td class="{% if message.current_status_message.name=='NEW' %}badge-soft-success 
+                    {% else %}badge-soft-warning {% endif %} font-size-12">{{message.current_status_message.value}}</td>
+
+  
+                
+                
+              </tr>
+
+               {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

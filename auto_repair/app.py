@@ -7,7 +7,7 @@ from auto_repair.cars.routes import cars
 from auto_repair.orders.routes import orders
 from auto_repair.errors.handlers import errors
 from auto_repair.models import db, login_manager, bcrypt, babel, mail, csrf
-from auto_repair.models import User, Order_user, Mechanic
+from auto_repair.models import User, Order_user, Mechanic, Message
 
 
 app = Flask(__name__)
@@ -17,6 +17,7 @@ admin = Admin(app, name='CarOne', index_view=MyAdminView(),
 admin.add_view(MyModelView(User, db.session))
 admin.add_view(MyModelView(Order_user, db.session))
 admin.add_view(MyModelView(Mechanic, db.session))
+admin.add_view(MyModelView(Message, db.session))
 
 app.register_blueprint(main)
 app.register_blueprint(users)

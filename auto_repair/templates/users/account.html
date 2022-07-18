@@ -336,13 +336,26 @@
                   <span>Общая статистика</span>
                 </a>
               </li>
+              <li class="menu-title">Поддержка</li>
+              <li>
+                <a href="{{ url_for('users.admin_messages')}}" class="waves-effect">
+                  <i class="fa-solid fa-message"></i>
+                  <span>Сообщения</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{ url_for('users.admin_messages_close')}}" class="waves-effect">
+                  <i class="fa-solid fa-message"></i>
+                  <span>Закрытые тикеты</span>
+                </a>
+              </li>
 
               {% else %}
               <li class="menu-title">Техподдержка</li>
               <li>
-                <a href="javascript: void(0);" class="waves-effect">
+                <a href="{{ url_for('users.message_history')}}" class="waves-effect">
                   <i class="fa-solid fa-question"></i>
-                  <span>Задать вопрос</span>
+                  <span>Тикеты</span>
                 </a>
               </li>
               <li>
