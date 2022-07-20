@@ -6,7 +6,7 @@
 instance/*
 !instance/.gitignore
 .webassets-cache
-#.env
+.env
 
 ### Flask.Python Stack ###
 # Byte-compiled / optimized / DLL files
@@ -72,8 +72,8 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 #Только для Heroku
-#*.sqlite3
-
+flask_site.sqlite3
+*.sqlite3
 # Flask stuff:
 instance/
 
@@ -289,3 +289,4 @@ docs/_book
 test/
 
 # End of https://www.toptal.com/developers/gitignore/api/python,flask,visualstudiocode,vue
+

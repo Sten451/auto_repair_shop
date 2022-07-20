@@ -1,0 +1,77 @@
+{% extends "users/account.html" %} {% block content_inner %}
+<div class="row">
+  <div class="col-xl-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title mb-4">Текущие сообщения: {{ context.count_new_message }}</h4>
+        <div class="table-responsive">
+          <table class="table table-centered">
+            <thead>
+              <tr>
+                <th scope="col">Дата</th>
+                <th scope="col">Номер</th>
+                <th scope="col">ID Клиента</th>
+                <th scope="col">Клиент</th>
+                <th scope="col">Email</th>
+                <th scope="col">Тема</th>
+                <th scope="col">Сообщение</th>
+                <th scope="col">Статус</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for message in context.messages_users %}
+              
+              <form class="" method="POST" action="">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />  
+              <tr>
+                <td>{{ message.date }}</td>
+                <td>{{ message.id }}</td>
+                <td>{% if user_id %} {{ message.user_id }} {% else %} Не зарегистрирован{% endif %}</td>
+                <td>{{ message.name_user }}</td>
+                <td>{{ message.email_user }}</td>
+                <td>{{ message.title }}</td>
+                <td style="max-width: 500px;">{{ message.message }}</td>
+                
+                <td>
+
+                  <select
+              required
+              class="form-select w-100 badge {% if message.current_status_message.name=='NEW' %}badge-soft-danger 
+                    {% else %}badge-soft-warning {% endif %} font-size-12"
+                    {{ message.current_status_message.value }}
+              name="select_status"
+              aria-label="Default select example"
+            >
+              <option selected value="{{message.current_status_message.value}}">
+                {{message.current_status_message.value}}
+              </option>
+              <option value="{{message.id}},NEW">Новое сообщение</option>
+              <option value="{{message.id}},ANSWER">Пользователю дан ответ</option>
+              <option value="{{message.id}},CLOSED">Тикет закрыт</option>
+             
+            </select>
+                                    
+                </td>
+                <td>
+                  <button
+            id="change_status"
+            type="submit"
+            class="btn btn-primary w-100"
+          >
+            Изменить статус
+          </button>
+                </td>
+                
+              </tr>
+            </form>
+               {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

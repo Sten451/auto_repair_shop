@@ -135,3 +135,23 @@ class Name_of_work(db.Model):
     price = db.Column(db.Integer, nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey(
         'category_of_work.id'), nullable=False)
+
+
+class Status_Message(enum.Enum):
+    NEW = "Новое сообщение"
+    ANSWER = "Пользователю дан ответ"
+    CLOSED = 'Тикет закрыт'
+
+
+class Message(db.Model):
+    """Модель сообщений в техподдержку"""
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.DateTime, nullable=False,
+                     default=datetime.now)
+    title = db.Column(db.String(100), default='Без темы')
+    message = db.Column(db.String(300), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), default=None)
+    name_user = db.Column(db.String(120), nullable=False)
+    email_user = db.Column(db.String(120), nullable=False)
+    current_status_message = db.Column(
+        db.Enum(Status_Message), default=Status_Message.NEW)

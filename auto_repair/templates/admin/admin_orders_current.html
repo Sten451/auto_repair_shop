@@ -15,11 +15,15 @@
                 <th scope="col">ФИО мастера</th>
                 <th scope="col">Виды работ</th>
                 <th scope="col">Статус</th>
+                <th scope="col"></th>
                 <th scope="col">Сумма</th>
               </tr>
             </thead>
             <tbody>
               {% for order in context.current_orders %}
+              
+              <form class="" method="POST" action="">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />  
               <tr>
                 <td>{{ order.date_work }}</td>
                 <td>{{ order.id }}</td>
@@ -36,13 +40,42 @@
                   {% endfor %}
                 </td>
                 <td>
-                  <span
-                    class="badge {% if order.current_status.name=="CONSIDERED" or order.current_status.name=="PAID" %}badge-soft-success {% elif order.current_status.name=='HOLD'%}badge-soft-danger {% else %}badge-soft-warning {% endif %} font-size-12"
-                    >{{ order.current_status.value }}</span
-                  >
+
+                  <select
+              required
+              class="form-select w-100 badge {% if order.current_status.name=='CONSIDERED' or order.current_status.name=='PAID' %}badge-soft-success 
+                    {% elif order.current_status.name=='HOLD'%}badge-soft-danger 
+                    {% else %}badge-soft-warning {% endif %} font-size-12"
+                    {{ order.current_status.value }}
+              name="select_status"
+              aria-label="Default select example"
+            >
+              <option selected value="{{order.current_status.value}}">
+                {{order.current_status.value}}
+              </option>
+              <option value="{{order.id}},CONSIDERED">Ждите одобрения</option>
+              <option value="{{order.id}},ACCEPTED">Можете приезжать к выбранному времени</option>
+              <option value="{{order.id}},WORK">Идёт ремонт</option>
+              <option value="{{order.id}},HOLD">Приостановлен до решения Заказчика</option>
+              <option value="{{order.id}},OVER">Ремонт окончен. Ожидается оплата</option>
+              <option value="{{order.id}},PAID">Оплачено. Можете забирать авто</option>
+              <option value="{{order.id}},CLOSED">Закрыт</option>
+             
+            </select>
+                                    
+                </td>
+                <td>
+                  <button
+            id="change_status"
+            type="submit"
+            class="btn btn-primary w-100"
+          >
+            Изменить статус
+          </button>
                 </td>
                 <td>{{ order.price }} рублей</td>
               </tr>
+            </form>
                {% endfor %}
             </tbody>
           </table>
